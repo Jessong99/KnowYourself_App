@@ -4,4 +4,6 @@
     <string name="profile">Profile</string>
     <string name="my_feed">My Feed</string>
     <string name="about_us">About Us</string>
+    <string name="navigation_bar_open">Open Navigation Drawer</string>
+    <string name="navigation_bar_close">Close Navigation Drawer</string>
 </resources>
