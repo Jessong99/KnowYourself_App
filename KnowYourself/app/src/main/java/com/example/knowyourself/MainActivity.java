@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ViewPagerFragment()).addToBackStack(null).commit();
+                        new ProfileFragment()).addToBackStack(null).commit();
                 break;
             case R.id.nav_myFeed:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

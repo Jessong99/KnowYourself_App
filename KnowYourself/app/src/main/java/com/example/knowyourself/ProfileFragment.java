@@ -45,6 +45,9 @@ public class ProfileFragment extends Fragment {
                     fragmentTransaction.replace(R.id.fragment_container, new ViewPagerFragment()).addToBackStack(null).commit();
                 }
             });
+        }else
+        {
+            view = inflater.inflate(R.layout.fragment_profile, container, false);
         }
         return view;
     }

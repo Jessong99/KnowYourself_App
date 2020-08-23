@@ -90,8 +90,7 @@ public class SignInFragment extends Fragment {
                                 if (task.isSuccessful()){
                                     Toast.makeText(getActivity(),"Sign In Successfully",Toast.LENGTH_SHORT).show();
                                     //Redirect to profile
-                                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                                    fragmentTransaction.replace(R.id.fragment_container, new ProfileFragment()).addToBackStack(null).commit();
+
                                 }
                             }
                         })
