@@ -8,4 +8,6 @@
     <string name="navigation_bar_close">Close Navigation Drawer</string>
     <string name="sign_in">SIGN IN</string>
     <string name="user_signIn">Sign In</string>
+    <string name="register">REGISTER</string>
+    <string name="user_register">Register</string>
 </resources>
