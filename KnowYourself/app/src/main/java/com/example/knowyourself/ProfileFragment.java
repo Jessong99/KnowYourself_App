@@ -31,10 +31,13 @@ public class ProfileFragment extends Fragment {
         //check if user currently log in
         mFirebaseAuth = FirebaseAuth.getInstance();
         if (mFirebaseAuth.getCurrentUser() != null) {
+
+        }
+        if (mFirebaseAuth.getCurrentUser() != null) {
             //get current user email and display on profile
             FirebaseUser user = mFirebaseAuth.getCurrentUser();
             mTextViewEmail.setText(
-                    ""+ user.getEmail());
+                    "" + user.getEmail());
 
             btnLogOut.setOnClickListener(new View.OnClickListener() {
                 @Override
