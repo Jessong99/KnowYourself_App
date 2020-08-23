@@ -1,5 +1,6 @@
 package com.example.knowyourself;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,14 +42,9 @@ public class ProfileFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     mFirebaseAuth.signOut();
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.viewPager, new ViewPagerFragment()).addToBackStack(null).commit();
+                    startActivity(new Intent(getActivity(), MainActivity.class));
                 }
             });
-        }else
-        {
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, new ViewPagerFragment()).addToBackStack(null).commit();
         }
         return view;
     }
