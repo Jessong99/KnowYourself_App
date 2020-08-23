@@ -42,12 +42,13 @@ public class ProfileFragment extends Fragment {
                 public void onClick(View view) {
                     mFirebaseAuth.signOut();
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, new ViewPagerFragment()).addToBackStack(null).commit();
+                    fragmentTransaction.replace(R.id.viewPager, new ViewPagerFragment()).addToBackStack(null).commit();
                 }
             });
         }else
         {
-            view = inflater.inflate(R.layout.fragment_profile, container, false);
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, new ViewPagerFragment()).addToBackStack(null).commit();
         }
         return view;
     }
