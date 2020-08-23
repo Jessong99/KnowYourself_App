@@ -6,4 +6,6 @@
     <string name="about_us">About Us</string>
     <string name="navigation_bar_open">Open Navigation Drawer</string>
     <string name="navigation_bar_close">Close Navigation Drawer</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="user_signIn">Sign In</string>
 </resources>
