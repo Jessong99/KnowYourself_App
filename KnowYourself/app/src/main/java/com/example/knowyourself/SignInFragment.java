@@ -20,6 +20,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -29,18 +33,23 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.w3c.dom.Text;
 
-public class SignInFragment extends Fragment {
+public class SignInFragment extends Fragment{
 
     //signIn
     private Button btnSignIn;
     private EditText eTextEmail;
     private EditText eTextPassword;
     private TextView btnRegisterNow;
+    private SignInButton signInGoogle;
+
 
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mFirebaseAuth;
 
     private InputMethodManager imm;
+
+    private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInOptions gso;
 
     @Nullable
     @Override
@@ -51,6 +60,7 @@ public class SignInFragment extends Fragment {
         eTextEmail = (EditText) view.findViewById(R.id.editText_email);
         eTextPassword = (EditText) view.findViewById(R.id.editText_password);
         btnRegisterNow = (TextView) view.findViewById(R.id.register_now);
+        signInGoogle = (SignInButton) view.findViewById(R.id.btn_signIn_google);
         imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         btnRegisterNow.setOnClickListener(new View.OnClickListener(){
@@ -118,6 +128,22 @@ public class SignInFragment extends Fragment {
             }
         });
 
+        // Configure Google Sign In
+         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+        signInGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         return view;
     }
+
 }
