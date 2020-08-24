@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,12 +27,15 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.w3c.dom.Text;
+
 public class SignInFragment extends Fragment {
 
     //signIn
     private Button btnSignIn;
     private EditText eTextEmail;
     private EditText eTextPassword;
+    private TextView btnRegisterNow;
 
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mFirebaseAuth;
@@ -46,7 +50,17 @@ public class SignInFragment extends Fragment {
         btnSignIn = (Button) view.findViewById(R.id.btn_signIn);
         eTextEmail = (EditText) view.findViewById(R.id.editText_email);
         eTextPassword = (EditText) view.findViewById(R.id.editText_password);
+        btnRegisterNow = (TextView) view.findViewById(R.id.register_now);
         imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        btnRegisterNow.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new RegisterFragment()).addToBackStack(null).commit();
+            }
+        });
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ public class RegisterFragment extends Fragment {
     private EditText eTextPasswordR;
     private InputMethodManager imm;
     private Button button;
+    private TextView signInNow;
 
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mFirebaseAuth;
@@ -42,7 +44,16 @@ public class RegisterFragment extends Fragment {
         button = (Button) view.findViewById(R.id.btn_register);
         eTextEmailR = (EditText) view.findViewById(R.id.editText_emailR);
         eTextPasswordR = (EditText) view.findViewById(R.id.editText_passwordR);
+        signInNow = (TextView) view.findViewById(R.id.signIn_now);
         imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        signInNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
+            }
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
