@@ -74,7 +74,7 @@
             android:id="@+id/btn_signIn_google"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:layout_width="385dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

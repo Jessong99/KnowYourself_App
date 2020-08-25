@@ -121,7 +121,8 @@ public class SignInFragment extends Fragment{
                                     Toast.makeText(getActivity(),"Sign In Successfully",Toast.LENGTH_SHORT).show();
                                     //Redirect to profile
                                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                                    fragmentTransaction.replace(R.id.fragment_container, new ProfileFragment()).addToBackStack(null).commit();
+                                    fragmentTransaction.replace(R.id.fragment_container, new ProfileFragment())
+                                            .addToBackStack(null).commit();
                                 }
                             }
                         })
@@ -175,7 +176,11 @@ public class SignInFragment extends Fragment{
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI.
-            //updateUI(account);
+            Toast.makeText(getActivity(),"Sign In Successfully",Toast.LENGTH_SHORT).show();
+            //Redirect to profile
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, new ProfileFragment())
+                    .addToBackStack(null).commit();
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
