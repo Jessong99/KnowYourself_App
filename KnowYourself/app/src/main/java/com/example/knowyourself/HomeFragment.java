@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class HomeFragment extends Fragment {
 
@@ -33,9 +32,8 @@ public class HomeFragment extends Fragment {
             btnDISCTest.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT).show();
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
+                    fragmentTransaction.replace(R.id.fragment_container, new DiscFragment()).addToBackStack(null).commit();
                 }
             });
         }else{
@@ -43,7 +41,6 @@ public class HomeFragment extends Fragment {
             fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
 
         }
-
         return view;
     }
 }
