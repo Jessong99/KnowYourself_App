@@ -75,6 +75,7 @@ public class DiscFragment extends Fragment {
                         }
                         counter++;
                     }
+                    mList.add(d);
                 }
                 mAdapter = new DiscAdapter(mList);
                 recyclerView.setAdapter(mAdapter);
