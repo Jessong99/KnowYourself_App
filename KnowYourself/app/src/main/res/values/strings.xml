@@ -11,4 +11,5 @@
     <string name="register">REGISTER</string>
     <string name="user_register">Register</string>
     <string name="log_out">LOG OUT</string>
+    <string name="home_fragment">Home Fragment</string>
 </resources>
