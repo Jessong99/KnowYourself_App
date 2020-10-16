@@ -55,12 +55,12 @@ public class DiscFragment extends Fragment {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                     String ques = dataSnapshot1.getKey();
                     int counter = 1;
+                    Toast.makeText(getContext(), ques, Toast.LENGTH_SHORT).show();
+                    d.setQues(ques);
                     for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
                         String sel = dataSnapshot2.getKey();
                         Toast.makeText(getContext(), sel, Toast.LENGTH_SHORT).show();
-                        d.setQues(sel);
                     }
-
                     mList.add(d);
                 }
                 mAdapter = new DiscAdapter(getContext(),mList);
