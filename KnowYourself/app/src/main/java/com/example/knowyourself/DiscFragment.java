@@ -47,37 +47,19 @@ public class DiscFragment extends Fragment {
                 .child("ques");
 
         //todo mDatabaseReference.keepSynced(true);
-        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mList = new ArrayList<DISC>();
                 DISC d = new DISC();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                     String ques = dataSnapshot1.getKey();
+                    String ques = dataSnapshot1.getKey();
                     Toast.makeText(getContext(), ques, Toast.LENGTH_SHORT).show();
                     int counter = 1;
-                    for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()){
-                        switch (counter){
-                            case 1:
-                                String sel1 = dataSnapshot2.getKey();
-                                d.setSel1(sel1);
-                                Toast.makeText(getContext(), sel1, Toast.LENGTH_SHORT).show();
-                                break;
-                            case 2:
-                                break;
-                            case 3:
-                                break;
-                            case 4:
-                                break;
-                            default:
-                                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                        counter++;
-                    }
+                    d.setQues(ques);
                     mList.add(d);
                 }
-                mAdapter = new DiscAdapter(mList);
+                mAdapter = new DiscAdapter(getContext(),mList);
                 recyclerView.setAdapter(mAdapter);
             }
 
