@@ -47,39 +47,43 @@ public class DiscFragment extends Fragment {
                 .child("ques");
 
         //todo mDatabaseReference.keepSynced(true);
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mList = new ArrayList<DISC>();
-                DISC d = new DISC();
+
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    DISC d = new DISC();
                     String ques = dataSnapshot1.getKey();
                     int counter = 1;
-                    Toast.makeText(getContext(), ques, Toast.LENGTH_SHORT).show();
-                    d.setQues(ques);
                     for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
-                        String sel = dataSnapshot2.getKey();
-                        Toast.makeText(getContext(), sel, Toast.LENGTH_SHORT).show();
+                        String sel = (String) dataSnapshot2.child("selection").getValue();
+                        String type = (String) dataSnapshot2.child("type").getValue();
                         switch (counter){
                             case 1:
                                 d.setSel1(sel);
+                                d.setType1(type);
                                 break;
                             case 2:
                                 d.setSel2(sel);
+                                d.setType2(type);
                                 break;
                             case 3:
                                 d.setSel3(sel);
+                                d.setType3(type);
                                 break;
                             case 4:
                                 d.setSel4(sel);
+                                d.setType4(type);
                                 break;
                             default:
                                 Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                                 break;
                         }
                         counter++;
-                        mList.add(d);
                     }
+                    d.setQues(ques);
+                    mList.add(d);
                 }
                 mAdapter = new DiscAdapter(getContext(),mList);
                 recyclerView.setAdapter(mAdapter);
