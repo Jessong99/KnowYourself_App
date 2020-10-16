@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,10 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.textViewQues.setText(disc.get(position).getQues());
+        holder.rBsel1.setText(disc.get(position).getSel1());
+        holder.rBsel2.setText(disc.get(position).getSel2());
+        holder.rBsel3.setText(disc.get(position).getSel3());
+        holder.rBsel4.setText(disc.get(position).getSel4());
     }
 
     @Override
@@ -39,12 +44,16 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
     }
 
      class MyViewHolder extends RecyclerView.ViewHolder {
-
         TextView textViewQues;
+        RadioButton rBsel1,rBsel2,rBsel3,rBsel4;
 
         public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
             textViewQues = (TextView) itemView.findViewById(R.id.textViewQue);
+            rBsel1 = (RadioButton) itemView.findViewById(R.id.radioButton);
+            rBsel2 = (RadioButton) itemView.findViewById(R.id.radioButton2);
+            rBsel3 = (RadioButton) itemView.findViewById(R.id.radioButton3);
+            rBsel4 = (RadioButton) itemView.findViewById(R.id.radioButton4);
         }
     }
 }

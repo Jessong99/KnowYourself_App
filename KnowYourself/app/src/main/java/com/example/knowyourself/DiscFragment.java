@@ -60,8 +60,26 @@ public class DiscFragment extends Fragment {
                     for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
                         String sel = dataSnapshot2.getKey();
                         Toast.makeText(getContext(), sel, Toast.LENGTH_SHORT).show();
+                        switch (counter){
+                            case 1:
+                                d.setSel1(sel);
+                                break;
+                            case 2:
+                                d.setSel2(sel);
+                                break;
+                            case 3:
+                                d.setSel3(sel);
+                                break;
+                            case 4:
+                                d.setSel4(sel);
+                                break;
+                            default:
+                                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                        counter++;
+                        mList.add(d);
                     }
-                    mList.add(d);
                 }
                 mAdapter = new DiscAdapter(getContext(),mList);
                 recyclerView.setAdapter(mAdapter);
