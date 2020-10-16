@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +30,7 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
+        holder.textViewQues.setText(disc.get(position).getQues());
     }
 
     @Override
@@ -37,9 +38,13 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
         return disc.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public MyViewHolder(View inflate) {
-            super(inflate);
+     class MyViewHolder extends RecyclerView.ViewHolder {
+
+        TextView textViewQues;
+
+        public MyViewHolder(@NonNull final View itemView) {
+            super(itemView);
+            textViewQues = (TextView) itemView.findViewById(R.id.textViewQue);
         }
     }
 }
