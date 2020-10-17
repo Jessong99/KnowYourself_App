@@ -31,7 +31,8 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.textViewQues.setText(disc.get(position).getQues());
+        String i = "Q" + position + ". Please select.";
+        holder.textViewQues.setText(i);
         holder.rBsel1.setText(disc.get(position).getSel1());
         holder.rBsel2.setText(disc.get(position).getSel2());
         holder.rBsel3.setText(disc.get(position).getSel3());
