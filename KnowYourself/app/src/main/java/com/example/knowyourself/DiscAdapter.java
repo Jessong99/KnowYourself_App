@@ -18,6 +18,7 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
 
     Context mContext;
     ArrayList<DISC> disc;
+    ArrayList<Result> result;
 
     public DiscAdapter(Context c, ArrayList<DISC> list) {
         mContext = c;
@@ -32,7 +33,7 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         int post = position+1;
         String i = "Q" + post + ". Please select.";
         holder.textViewQues.setText(i);
@@ -47,16 +48,17 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
 
                 switch (i) {
                     case R.id.radioButton:
-                        Toast.makeText(mContext,"1", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext,disc.get(position).getType1(), Toast.LENGTH_SHORT).show();
+
                         break;
                     case R.id.radioButton2:
-                        Toast.makeText(mContext,"2", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext,disc.get(position).getType2(), Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.radioButton3:
-                        Toast.makeText(mContext,"3", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext,disc.get(position).getType3(), Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.radioButton4:
-                        Toast.makeText(mContext,"4", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext,disc.get(position).getType4(), Toast.LENGTH_SHORT).show();
                         break;
                     default:
                         Toast.makeText(mContext,"Default", Toast.LENGTH_SHORT).show();
