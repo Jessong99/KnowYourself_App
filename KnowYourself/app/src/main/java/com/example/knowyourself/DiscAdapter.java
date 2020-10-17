@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -73,13 +72,6 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
 
             }
         });
-        result.get(result.indexOf(0));
-        holder.m.setOnClickListener((new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "SubmitBtn", Toast.LENGTH_SHORT).show();
-            }
-        }));
     }
 
     @Override
@@ -91,7 +83,6 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
         TextView textViewQues;
         RadioButton rBsel1,rBsel2,rBsel3,rBsel4;
         RadioGroup mRadioGroup;
-        Button m;
 
         public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -101,7 +92,6 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
             rBsel3 = (RadioButton) itemView.findViewById(R.id.radioButton3);
             rBsel4 = (RadioButton) itemView.findViewById(R.id.radioButton4);
             mRadioGroup = (RadioGroup) itemView.findViewById(R.id.radioGrp);
-            m = (Button) itemView.findViewById(R.id.btnSubmitTest);
 
         }
     }
