@@ -3,18 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/disc_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnSubmitTest"
+        android:layout_marginBottom="493dp"
         android:scrollbars="vertical" />
 
-        <Button
-            android:id="@+id/btnSubmitTest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="Submit" />
+    <Button
+        android:id="@+id/btnSubmitTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
 
 
 </RelativeLayout>
