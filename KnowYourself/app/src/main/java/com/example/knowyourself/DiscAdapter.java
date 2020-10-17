@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,7 +32,7 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         int post = position+1;
         String i = "Q" + post + ". Please select.";
         holder.textViewQues.setText(i);
@@ -38,6 +40,32 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
         holder.rBsel2.setText(disc.get(position).getSel2());
         holder.rBsel3.setText(disc.get(position).getSel3());
         holder.rBsel4.setText(disc.get(position).getSel4());
+
+        holder.mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+                switch (i) {
+                    case R.id.radioButton:
+                        Toast.makeText(mContext,"1", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.radioButton2:
+                        Toast.makeText(mContext,"2", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.radioButton3:
+                        Toast.makeText(mContext,"3", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.radioButton4:
+                        Toast.makeText(mContext,"4", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Toast.makeText(mContext,"Default", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+
+            }
+        });
+
     }
 
     @Override
@@ -48,6 +76,7 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
      class MyViewHolder extends RecyclerView.ViewHolder {
         TextView textViewQues;
         RadioButton rBsel1,rBsel2,rBsel3,rBsel4;
+        RadioGroup mRadioGroup;
 
         public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -56,6 +85,8 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
             rBsel2 = (RadioButton) itemView.findViewById(R.id.radioButton2);
             rBsel3 = (RadioButton) itemView.findViewById(R.id.radioButton3);
             rBsel4 = (RadioButton) itemView.findViewById(R.id.radioButton4);
+            mRadioGroup = (RadioGroup) itemView.findViewById(R.id.radioGrp);
+
         }
     }
 }
