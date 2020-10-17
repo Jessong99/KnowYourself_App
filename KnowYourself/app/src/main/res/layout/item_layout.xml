@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
+    android:background="#DDD8D8"
+    android:backgroundTint="#00F1F1F1"
     android:orientation="vertical"
     android:paddingLeft="10px"
     android:paddingTop="15px"
@@ -43,4 +45,10 @@
             android:layout_height="wrap_content"
             android:text="RadioButton" />
     </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="3dp"
+        android:background="#c7c7c7"></View>
 </LinearLayout>
