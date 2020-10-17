@@ -2,14 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-
-    android:background="#DDD8D8"
-    android:backgroundTint="#00F1F1F1"
     android:orientation="vertical"
     android:paddingLeft="10px"
     android:paddingRight="10px"
-    android:paddingTop="15px"
-    android:paddingBottom="30px">
+    android:paddingTop="10px"
+    android:paddingBottom="20px">
 
 
     <TextView
