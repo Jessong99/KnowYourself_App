@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,8 @@ public class DiscFragment extends Fragment {
     private ArrayList<DISC> mList;
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference;
+
+    private Button btnSubmitTest;
 
     @Nullable
     @Override
@@ -94,6 +97,14 @@ public class DiscFragment extends Fragment {
                 Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
             }
         });
+
+        btnSubmitTest = (Button)view.findViewById(R.id.btnSubmitTest);
+        btnSubmitTest.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Submit Btn", Toast.LENGTH_SHORT).show();
+            }
+        }));
 
         return view;
     }
