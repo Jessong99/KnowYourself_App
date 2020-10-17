@@ -36,14 +36,13 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         int post = position+1;
-        String i = "Q" + post + ". Please select.";
-        holder.textViewQues.setText(i);
+        String que = "Q" + post + ". Please select.";
+        holder.textViewQues.setText(que);
         holder.rBsel1.setText(disc.get(position).getSel1());
         holder.rBsel2.setText(disc.get(position).getSel2());
         holder.rBsel3.setText(disc.get(position).getSel3());
         holder.rBsel4.setText(disc.get(position).getSel4());
-        while (result.size() < position)
-        {
+        for (int j = 0; j < result.size(); j++) {
             result.add(null);
         }
         holder.mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
