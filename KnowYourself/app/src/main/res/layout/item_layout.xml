@@ -8,7 +8,6 @@
     android:paddingTop="10px"
     android:paddingBottom="20px">
 
-
     <TextView
         android:id="@+id/textViewQue"
         android:layout_width="match_parent"
