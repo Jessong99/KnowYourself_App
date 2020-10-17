@@ -95,7 +95,6 @@ public class DiscFragment extends Fragment {
             }
         });
 
-
         Toast.makeText(getContext(),"Success", Toast.LENGTH_SHORT).show();
         return view;
     }
