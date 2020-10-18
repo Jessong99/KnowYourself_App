@@ -122,7 +122,8 @@ public class DiscFragment extends Fragment {
         btnSubmitTest.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Submit Btn", Toast.LENGTH_SHORT).show();
+                String hi = mPreferences.getString("sel1","none");
+                Toast.makeText(getContext(), hi, Toast.LENGTH_SHORT).show();
             }
         }));
 

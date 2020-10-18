@@ -14,27 +14,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
 
     Context mContext;
     ArrayList<DISC> disc;
-    //ArrayList<String> result = new ArrayList<String>();
-    //Result r = new Result();
-   // Object[] results = new Object[100];
-    Map<Integer, String> map = new HashMap<Integer, String>();
+
     //Shared Preferences
-    private SharedPreferences mPreferences;
+    SharedPreferences mPreferences;
     private String spFileName = "com.example.sharedpreference" ;
 
     public DiscAdapter(Context c, ArrayList<DISC> list) {
         mContext = c;
         disc = list;
     }
-
-
+    
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -51,43 +47,28 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
         holder.rBsel3.setText(disc.get(position).getSel3());
         holder.rBsel4.setText(disc.get(position).getSel4());
 
-        //final String hi = mPreferences.getString(spFileName,"sel1");
+        //initialize shared preferences
+        mPreferences = this.mContext.getSharedPreferences(spFileName, MODE_PRIVATE);
+        final String hi = mPreferences.getString("sel1","default");
+
         holder.mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i) {
                     case R.id.radioButton:
                         String type = disc.get(position).getType1();
-                        //Toast.makeText(mContext,type, Toast.LENGTH_SHORT).show();
-                        //result.set(position,type);
-                        //results[position] = type;
-                        //r.setType(type);
-                        map.put(position,type);
-                        //Toast.makeText(mContext,hi, Toast.LENGTH_SHORT).show();
-                        String print =  String.valueOf(map.values());
-                        Toast.makeText(mContext,print,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext,hi, Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.radioButton2:
                         String type2 = disc.get(position).getType2();
-                        map.put(position,type2);
-                        String print2 =  String.valueOf(map.values());
-                        Toast.makeText(mContext,print2,Toast.LENGTH_SHORT).show();
                         //Toast.makeText(mContext,type2, Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(mContext,map.get(position), Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.radioButton3:
                         String type3 = disc.get(position).getType3();
-                        map.put(position,type3);
-                        String print3 =  String.valueOf(map.values());
-                        Toast.makeText(mContext,print3,Toast.LENGTH_SHORT).show();
                         //Toast.makeText(mContext,type3, Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(mContext,map.get(position), Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.radioButton4:
                         String type4 = disc.get(position).getType4();
-                        map.put(position,type4);
-                        String print4 =  String.valueOf(map.values());
-                        Toast.makeText(mContext,print4,Toast.LENGTH_SHORT).show();
                         //Toast.makeText(mContext,type4, Toast.LENGTH_SHORT).show();
                         //Toast.makeText(mContext,map.get(position), Toast.LENGTH_SHORT).show();
                         break;
