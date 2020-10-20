@@ -118,10 +118,35 @@ public class DiscFragment extends Fragment {
         btnSubmitTest.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String hi = mPreferences.getString("0","none");
                 String totalQues = String.valueOf(totalQue);
-                Toast.makeText(getContext(), hi, Toast.LENGTH_SHORT).show();
-                Toast.makeText(getContext(), totalQues, Toast.LENGTH_SHORT).show();
+                int noD = 0;
+                int noI = 0;
+                int noS = 0;
+                int noC = 0;
+
+                for(int m = 0; m<=totalQue; m++){
+                    String position = String.valueOf(m);
+                    String getType = mPreferences.getString(position,"none");
+
+                    switch (getType){
+                        case "D":
+                            noD++;
+                            break;
+                        case "I":
+                            noI++;
+                            break;
+                        case "S":
+                            noS++;
+                            break;
+                        case "C":
+                            noC++;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                String message = "Total D :" + noD + "Total I" + noI + "Total S" + noS + "Total C" + noC;
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
             }
         }));
 
