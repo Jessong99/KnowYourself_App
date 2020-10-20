@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +36,7 @@ public class DiscFragment extends Fragment {
     private int totalQue = 0;
     //Firebase
     private FirebaseAuth mFirebaseAuth;
-    private DatabaseReference mDatabaseReference;
+    private DatabaseReference mDatabaseReference, mDatabaseReference2;
 
     private Button btnSubmitTest;
     //Shared Preferences
@@ -128,6 +129,7 @@ public class DiscFragment extends Fragment {
                     String position = String.valueOf(m);
                     String getType = mPreferences.getString(position,"none");
 
+                    //Count score for each type
                     switch (getType){
                         case "D":
                             noD++;
@@ -144,6 +146,24 @@ public class DiscFragment extends Fragment {
                         default:
                             break;
                     }
+                }
+
+                //check if user currently log in
+                mFirebaseAuth = FirebaseAuth.getInstance();
+                if (mFirebaseAuth.getCurrentUser() != null) {
+                    //get current userID
+                    FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                    String uid = user.getUid();
+
+                    mDatabaseReference2 = FirebaseDatabase.getInstance().getReference()
+                            .child("assessment")
+                            .child("DISC")
+                            .child("result");
+                    mDatabaseReference2.child(uid).child("D").setValue(noD);
+                    mDatabaseReference2.child(uid).child("I").setValue(noI);
+                    mDatabaseReference2.child(uid).child("S").setValue(noS);
+                    mDatabaseReference2.child(uid).child("C").setValue(noC);
+
                 }
             }
         }));
