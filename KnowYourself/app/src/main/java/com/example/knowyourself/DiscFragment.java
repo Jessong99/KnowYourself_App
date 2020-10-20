@@ -145,8 +145,6 @@ public class DiscFragment extends Fragment {
                             break;
                     }
                 }
-                String message = "Total D :" + noD + "Total I" + noI + "Total S" + noS + "Total C" + noC;
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
             }
         }));
 

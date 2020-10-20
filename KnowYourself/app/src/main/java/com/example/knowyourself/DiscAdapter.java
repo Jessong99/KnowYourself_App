@@ -57,44 +57,30 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
         holder.mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                String type="";
                 switch (i) {
                     case R.id.radioButton:
-                        String type = disc.get(position).getType1();
-                        saved = String.valueOf(position);
-                        Toast.makeText(mContext,saved, Toast.LENGTH_SHORT).show();
-                        //put key-value pair
-                        spEditor.putString(saved,type);
-                        //save the preferences
-                        spEditor.apply();
+                        type = disc.get(position).getType1();
                         break;
                     case R.id.radioButton2:
-                        String type2 = disc.get(position).getType2();
-                        saved = String.valueOf(position);
-                        //put key-value pair
-                        spEditor.putString(saved,type2);
-                        //save the preferences
-                        spEditor.apply();
+                        type = disc.get(position).getType2();
                         break;
                     case R.id.radioButton3:
-                        String type3 = disc.get(position).getType3();
-                        saved = String.valueOf(position);
-                        //put key-value pair
-                        spEditor.putString(saved,type3);
-                        //save the preferences
-                        spEditor.apply();
+                        type = disc.get(position).getType3();
                         break;
                     case R.id.radioButton4:
-                        String type4 = disc.get(position).getType4();
-                        saved = String.valueOf(position);
-                        //put key-value pair
-                        spEditor.putString(saved,type4);
-                        //save the preferences
-                        spEditor.apply();
+                        type = disc.get(position).getType4();
                         break;
                     default:
                         Toast.makeText(mContext,"Default", Toast.LENGTH_SHORT).show();
                         break;
                 }
+
+                saved = String.valueOf(position);
+                //put key-value pair
+                spEditor.putString(saved,type);
+                //save the preferences
+                spEditor.apply();
 
             }
         });
