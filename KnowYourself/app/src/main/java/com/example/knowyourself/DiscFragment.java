@@ -158,11 +158,20 @@ public class DiscFragment extends Fragment {
                     mDatabaseReference2 = FirebaseDatabase.getInstance().getReference()
                             .child("assessment")
                             .child("DISC")
-                            .child("result");
+                            .child("result")
+                            .child(uid);
+
+                    mDatabaseReference2.setValue({
+
+                    });
+
+                    //save DISC test result into Firebase
                     mDatabaseReference2.child(uid).child("D").setValue(noD);
                     mDatabaseReference2.child(uid).child("I").setValue(noI);
                     mDatabaseReference2.child(uid).child("S").setValue(noS);
                     mDatabaseReference2.child(uid).child("C").setValue(noC);
+
+
 
                 }
             }
