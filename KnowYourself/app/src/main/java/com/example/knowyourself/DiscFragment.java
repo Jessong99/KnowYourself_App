@@ -148,6 +148,8 @@ public class DiscFragment extends Fragment {
                 }
 
                 int totalSelected = noD + noI + noS + noC;
+
+                //make sure all question is completed
                 if (totalSelected != totalQue) {
                     Toast.makeText(getContext(), "Please complete all questions.", Toast.LENGTH_SHORT).show();
                 }else {
