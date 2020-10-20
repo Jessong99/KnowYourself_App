@@ -119,18 +119,17 @@ public class DiscFragment extends Fragment {
         btnSubmitTest.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String totalQues = String.valueOf(totalQue);
                 int noD = 0;
                 int noI = 0;
                 int noS = 0;
                 int noC = 0;
 
-                for(int m = 0; m<=totalQue; m++){
+                for (int m = 0; m <= totalQue; m++) {
                     String position = String.valueOf(m);
-                    String getType = mPreferences.getString(position,"none");
+                    String getType = mPreferences.getString(position, "none");
 
                     //Count score for each type
-                    switch (getType){
+                    switch (getType) {
                         case "D":
                             noD++;
                             break;
@@ -148,31 +147,31 @@ public class DiscFragment extends Fragment {
                     }
                 }
 
-                //check if user currently log in
-                mFirebaseAuth = FirebaseAuth.getInstance();
-                if (mFirebaseAuth.getCurrentUser() != null) {
-                    //get current userID
-                    FirebaseUser user = mFirebaseAuth.getCurrentUser();
-                    String uid = user.getUid();
+                int totalSelected = noD + noI + noS + noC;
+                if (totalSelected != totalQue) {
+                    Toast.makeText(getContext(), "Please complete all questions.", Toast.LENGTH_SHORT).show();
+                }else {
+                    //check if user currently log in
+                    mFirebaseAuth = FirebaseAuth.getInstance();
+                    if (mFirebaseAuth.getCurrentUser() != null) {
+                        //get current userID
+                        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                        String uid = user.getUid();
 
-                    mDatabaseReference2 = FirebaseDatabase.getInstance().getReference()
-                            .child("assessment")
-                            .child("DISC")
-                            .child("result")
-                            .child(uid);
+                        mDatabaseReference2 = FirebaseDatabase.getInstance().getReference()
+                                .child("assessment")
+                                .child("DISC")
+                                .child("result")
+                                .child(uid);
 
-                    mDatabaseReference2.setValue({
+                        //save DISC test result into Firebase
+                        mDatabaseReference2.child("D").setValue(noD);
+                        mDatabaseReference2.child("I").setValue(noI);
+                        mDatabaseReference2.child("S").setValue(noS);
+                        mDatabaseReference2.child("C").setValue(noC);
 
-                    });
-
-                    //save DISC test result into Firebase
-                    mDatabaseReference2.child(uid).child("D").setValue(noD);
-                    mDatabaseReference2.child(uid).child("I").setValue(noI);
-                    mDatabaseReference2.child(uid).child("S").setValue(noS);
-                    mDatabaseReference2.child(uid).child("C").setValue(noC);
-
-
-
+                        Toast.makeText(getContext(),"Result Saved", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }));
