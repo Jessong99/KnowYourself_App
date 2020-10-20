@@ -48,12 +48,6 @@ public class DiscFragment extends Fragment {
 
         //initialize shared preferences
         mPreferences = this.getActivity().getSharedPreferences(spFileName, getContext().MODE_PRIVATE);
-        //initialization of editor
-        SharedPreferences.Editor spEditor = mPreferences.edit();
-        //put key-value pair
-        spEditor.putString("sel1","hi");
-        //save the preferences
-        spEditor.apply();
 
         //Set Up recyclerView
         recyclerView = (RecyclerView)view.findViewById(R.id.disc_recycler_view);// use a linear layout manager
@@ -122,7 +116,7 @@ public class DiscFragment extends Fragment {
         btnSubmitTest.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String hi = mPreferences.getString("sel1","none");
+                String hi = mPreferences.getString("0","none");
                 Toast.makeText(getContext(), hi, Toast.LENGTH_SHORT).show();
             }
         }));

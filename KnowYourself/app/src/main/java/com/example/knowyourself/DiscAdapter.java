@@ -25,6 +25,8 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
     //Shared Preferences
     SharedPreferences mPreferences;
     private String spFileName = "com.example.sharedpreference" ;
+    String saved;
+
 
     public DiscAdapter(Context c, ArrayList<DISC> list) {
         mContext = c;
@@ -49,28 +51,41 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
 
         //initialize shared preferences
         mPreferences = this.mContext.getSharedPreferences(spFileName, MODE_PRIVATE);
-        final String hi = mPreferences.getString("sel1","default");
 
+        //initialization of editor
+        final SharedPreferences.Editor spEditor = mPreferences.edit();
+        saved = String.valueOf(position);
         holder.mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i) {
                     case R.id.radioButton:
                         String type = disc.get(position).getType1();
-                        Toast.makeText(mContext,hi, Toast.LENGTH_SHORT).show();
+                        //put key-value pair
+                        spEditor.putString(saved,type);
+                        //save the preferences
+                        spEditor.apply();
                         break;
                     case R.id.radioButton2:
                         String type2 = disc.get(position).getType2();
-                        //Toast.makeText(mContext,type2, Toast.LENGTH_SHORT).show();
+                        //put key-value pair
+                        spEditor.putString(saved,type2);
+                        //save the preferences
+                        spEditor.apply();
                         break;
                     case R.id.radioButton3:
                         String type3 = disc.get(position).getType3();
-                        //Toast.makeText(mContext,type3, Toast.LENGTH_SHORT).show();
+                        //put key-value pair
+                        spEditor.putString(saved,type3);
+                        //save the preferences
+                        spEditor.apply();
                         break;
                     case R.id.radioButton4:
                         String type4 = disc.get(position).getType4();
-                        //Toast.makeText(mContext,type4, Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(mContext,map.get(position), Toast.LENGTH_SHORT).show();
+                        //put key-value pair
+                        spEditor.putString(saved,type4);
+                        //save the preferences
+                        spEditor.apply();
                         break;
                     default:
                         Toast.makeText(mContext,"Default", Toast.LENGTH_SHORT).show();
