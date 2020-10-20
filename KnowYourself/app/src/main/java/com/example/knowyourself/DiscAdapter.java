@@ -51,16 +51,17 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
 
         //initialize shared preferences
         mPreferences = this.mContext.getSharedPreferences(spFileName, MODE_PRIVATE);
-
         //initialization of editor
         final SharedPreferences.Editor spEditor = mPreferences.edit();
-        saved = String.valueOf(position);
+
         holder.mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i) {
                     case R.id.radioButton:
                         String type = disc.get(position).getType1();
+                        saved = String.valueOf(position);
+                        Toast.makeText(mContext,saved, Toast.LENGTH_SHORT).show();
                         //put key-value pair
                         spEditor.putString(saved,type);
                         //save the preferences
@@ -68,6 +69,7 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
                         break;
                     case R.id.radioButton2:
                         String type2 = disc.get(position).getType2();
+                        saved = String.valueOf(position);
                         //put key-value pair
                         spEditor.putString(saved,type2);
                         //save the preferences
@@ -75,6 +77,7 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
                         break;
                     case R.id.radioButton3:
                         String type3 = disc.get(position).getType3();
+                        saved = String.valueOf(position);
                         //put key-value pair
                         spEditor.putString(saved,type3);
                         //save the preferences
@@ -82,6 +85,7 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
                         break;
                     case R.id.radioButton4:
                         String type4 = disc.get(position).getType4();
+                        saved = String.valueOf(position);
                         //put key-value pair
                         spEditor.putString(saved,type4);
                         //save the preferences

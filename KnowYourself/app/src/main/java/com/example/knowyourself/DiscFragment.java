@@ -32,6 +32,7 @@ public class DiscFragment extends Fragment {
 
     private ArrayList<DISC> mList;
 
+    private int totalQue = 0;
     //Firebase
     private FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference;
@@ -101,6 +102,7 @@ public class DiscFragment extends Fragment {
                     }
                     d.setQues(ques);
                     mList.add(d);
+                    totalQue++;
                 }
                 mAdapter = new DiscAdapter(getContext(),mList);
                 recyclerView.setAdapter(mAdapter);
@@ -117,7 +119,9 @@ public class DiscFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String hi = mPreferences.getString("0","none");
+                String totalQues = String.valueOf(totalQue);
                 Toast.makeText(getContext(), hi, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), totalQues, Toast.LENGTH_SHORT).show();
             }
         }));
 
