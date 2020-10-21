@@ -158,13 +158,15 @@ public class DiscFragment extends Fragment {
                     if (mFirebaseAuth.getCurrentUser() != null) {
                         //get current userID
                         FirebaseUser user = mFirebaseAuth.getCurrentUser();
-                        String uid = user.getUid();
+                        String uid = user.getUid();Long tsLong = System.currentTimeMillis()/1000;
+                        String ts = tsLong.toString();
 
                         mDatabaseReference2 = FirebaseDatabase.getInstance().getReference()
                                 .child("assessment")
                                 .child("DISC")
                                 .child("result")
-                                .child(uid);
+                                .child(uid)
+                                .child(ts);
 
                         //save DISC test result into Firebase
                         mDatabaseReference2.child("D").setValue(noD);
