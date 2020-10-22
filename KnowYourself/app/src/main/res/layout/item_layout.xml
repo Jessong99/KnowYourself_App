@@ -4,19 +4,21 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingLeft="10px"
-    android:paddingRight="10px"
     android:paddingTop="10px"
+    android:paddingRight="10px"
     android:paddingBottom="20px">
 
     <TextView
         android:id="@+id/textViewQue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="40px"
         android:text="TextView" />
 
     <RadioGroup
         android:id="@+id/radioGrp"
         android:layout_width="match_parent"
+        android:paddingLeft="40px"
         android:layout_height="wrap_content">
 
         <RadioButton

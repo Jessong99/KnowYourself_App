@@ -15,12 +15,14 @@
             android:id="@+id/btn_DISCTest"
             android:layout_width="200dp"
             android:layout_height="match_parent"
+            android:backgroundTint="#a1be95"
             android:text="Take DISC Test" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="200dp"
             android:layout_height="match_parent"
+            android:backgroundTint="#e2dfa2"
             android:text="Result" />
 
     </LinearLayout>
