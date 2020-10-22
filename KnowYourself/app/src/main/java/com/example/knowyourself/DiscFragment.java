@@ -160,7 +160,9 @@ public class DiscFragment extends Fragment {
                     if (mFirebaseAuth.getCurrentUser() != null) {
                         //get current userID
                         FirebaseUser user = mFirebaseAuth.getCurrentUser();
-                        String uid = user.getUid();Long tsLong = System.currentTimeMillis()/1000;
+                        String uid = user.getUid();
+                        //get current timeStamp
+                        Long tsLong = System.currentTimeMillis()/1000;
                         String ts = tsLong.toString();
 
                         mDatabaseReference2 = FirebaseDatabase.getInstance().getReference()
@@ -175,6 +177,14 @@ public class DiscFragment extends Fragment {
                         mDatabaseReference2.child("I").setValue(noI);
                         mDatabaseReference2.child("S").setValue(noS);
                         mDatabaseReference2.child("C").setValue(noC);
+
+
+                        //initialization of editor
+                        final SharedPreferences.Editor spEditor = mPreferences.edit();
+                        //put key-value pair
+                        spEditor.putString("resultTimeStamp",ts);
+                        //save the preferences
+                        spEditor.apply();
 
                         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.fragment_container, new SingleResultFragment()).addToBackStack(null).commit();
