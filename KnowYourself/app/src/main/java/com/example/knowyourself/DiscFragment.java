@@ -176,7 +176,6 @@ public class DiscFragment extends Fragment {
                         mDatabaseReference2.child("S").setValue(noS);
                         mDatabaseReference2.child("C").setValue(noC);
 
-                        Toast.makeText(getContext(),"Result Saved", Toast.LENGTH_SHORT).show();
                         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.fragment_container, new SingleResultFragment()).addToBackStack(null).commit();
 

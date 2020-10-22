@@ -16,10 +16,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 public class SingleResultFragment extends Fragment {
 
     FirebaseAuth mFirebaseAuth;
@@ -45,18 +41,8 @@ public class SingleResultFragment extends Fragment {
                     .child(uid)
                     .child(ts);
 
-            HashMap<String,Integer> map=new HashMap<String, Integer>();
-            map.put("D", noD);
-            map.put("I", noI);
-            map.put("S", noS);
-            map.put("C", noC);
-            int maxValueInMap=(Collections.max(map.values()));  // This will return max value in the Hashmap
-            for (Map.Entry<String, Integer> entry : map.entrySet()) {  // Itrate through hashmap
-                if (entry.getValue()==maxValueInMap) {
-                    // Print the key with max value
-                    System.out.println(entry.getKey());
-                }
-            }
+
+            Toast.makeText(getContext(),"Result Saved", Toast.LENGTH_SHORT).show();
 
         }else{
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
