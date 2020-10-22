@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeFragment extends Fragment {
 
-    private Button btnDISCTest,btnResultHisotry;
+    private Button btnDISCTest, btnResultHisotry, btnMyFeed, btnPersonalityProfile;
     FirebaseAuth mFirebaseAuth;
 
     //Shared Preferences
@@ -32,6 +32,8 @@ public class HomeFragment extends Fragment {
 
         btnDISCTest = (Button) view.findViewById(R.id.btn_DISCTest);
         btnResultHisotry = (Button) view.findViewById(R.id.btn_DISCResult);
+        btnPersonalityProfile = (Button) view.findViewById(R.id.btn_profile);
+        btnMyFeed = (Button) view.findViewById(R.id.btn_myFeed);
 
         if (mFirebaseAuth.getCurrentUser() != null) {
             //implement DISC test
@@ -53,6 +55,23 @@ public class HomeFragment extends Fragment {
                 public void onClick(View view) {
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.fragment_container, new ResultHistoryFragment()).addToBackStack(null).commit();
+                }
+            });
+
+            //display personality profile
+            btnPersonalityProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+
+            //redirect to MyFeed section
+            btnMyFeed.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, new MyFeedFragment()).addToBackStack(null).commit();
                 }
             });
 
