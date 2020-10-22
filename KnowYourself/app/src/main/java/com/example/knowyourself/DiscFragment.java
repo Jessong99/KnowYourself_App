@@ -175,6 +175,7 @@ public class DiscFragment extends Fragment {
                         mDatabaseReference2.child("C").setValue(noC);
 
                         Toast.makeText(getContext(),"Result Saved", Toast.LENGTH_SHORT).show();
+
                     }
                 }
             }
