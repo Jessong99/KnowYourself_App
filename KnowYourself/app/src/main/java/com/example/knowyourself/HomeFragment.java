@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeFragment extends Fragment {
 
-    private Button btnDISCTest;
+    private Button btnDISCTest,btnResultHisotry;
     FirebaseAuth mFirebaseAuth;
 
     //Shared Preferences
@@ -31,8 +31,10 @@ public class HomeFragment extends Fragment {
         mFirebaseAuth = FirebaseAuth.getInstance();
 
         btnDISCTest = (Button) view.findViewById(R.id.btn_DISCTest);
+        btnResultHisotry = (Button) view.findViewById(R.id.btn_DISCResult);
 
         if (mFirebaseAuth.getCurrentUser() != null) {
+            //implement DISC test
             btnDISCTest.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -44,6 +46,16 @@ public class HomeFragment extends Fragment {
                     fragmentTransaction.replace(R.id.fragment_container, new DiscFragment()).addToBackStack(null).commit();
                 }
             });
+
+            //display result history
+            btnResultHisotry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, new ResultHistoryFragment()).addToBackStack(null).commit();
+                }
+            });
+
         }else{
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
