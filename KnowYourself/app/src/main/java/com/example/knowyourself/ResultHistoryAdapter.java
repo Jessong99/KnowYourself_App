@@ -1,20 +1,26 @@
 package com.example.knowyourself;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ResultHistoryAdapter extends RecyclerView.Adapter<ResultHistoryAdapter.MyViewHolder> {
 
+    //Shared Preferences
+    private SharedPreferences mPreferences;
+    private String spFileName = "com.example.sharedpreference" ;
 
     Context mContext;
     ArrayList<ResultHistory> result;
@@ -32,12 +38,24 @@ public class ResultHistoryAdapter extends RecyclerView.Adapter<ResultHistoryAdap
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+
+        //initialize shared preferences
+        mPreferences = this.mContext.getSharedPreferences(spFileName, MODE_PRIVATE);
+
         holder.timestamp.setText("Test taken on: " + result.get(position).getTimestamp());
         holder.result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Click"+position, Toast.LENGTH_SHORT).show();
+                //initialization of editor
+                final SharedPreferences.Editor spEditor = mPreferences.edit();
+                //put key-value pair
+                spEditor.putString("resultTimeStamp",result.get(position).getTimestamp());
+                //save the preferences
+                spEditor.apply();
 
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                activity.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new SingleResultFragment()).addToBackStack(null).commit();
             }
         });
     }
