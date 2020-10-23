@@ -43,6 +43,8 @@ public class ResultHistoryFragment extends Fragment {
         //Set Up recyclerView
         recyclerView = (RecyclerView)view.findViewById(R.id.result_history_recycler_view);// use a linear layout manager
         layoutManager = new LinearLayoutManager(getContext());
+        ((LinearLayoutManager) layoutManager).setReverseLayout(true);
+        ((LinearLayoutManager) layoutManager).setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
 
         //check if user currently log in
