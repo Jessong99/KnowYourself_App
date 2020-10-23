@@ -30,12 +30,11 @@ public class ResultHistoryAdapter extends RecyclerView.Adapter<ResultHistoryAdap
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        
+        holder.timestamp.setText("Test taken on: " + result.get(position).getTimestamp());
     }
 
     @Override
-    public int getItemCount() {return result.size();
-    }
+    public int getItemCount() {return result.size();}
 
     class MyViewHolder extends RecyclerView.ViewHolder{
         TextView timestamp;

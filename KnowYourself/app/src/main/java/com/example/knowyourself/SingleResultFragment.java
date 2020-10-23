@@ -93,6 +93,7 @@ public class SingleResultFragment extends Fragment {
                     map.put("I", noI);
                     map.put("S", noS);
                     map.put("C", noC);
+
                     int maxValueInMap=(Collections.max(map.values()));  // This will return max value in the Hashmap
                     for (Map.Entry<String, Integer> entry : map.entrySet()) {  // Itrate through hashmap
                         if (entry.getValue()==maxValueInMap) {
