@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -29,8 +31,15 @@ public class ResultHistoryAdapter extends RecyclerView.Adapter<ResultHistoryAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         holder.timestamp.setText("Test taken on: " + result.get(position).getTimestamp());
+        holder.result.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Click"+position, Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @Override
@@ -38,9 +47,11 @@ public class ResultHistoryAdapter extends RecyclerView.Adapter<ResultHistoryAdap
 
     class MyViewHolder extends RecyclerView.ViewHolder{
         TextView timestamp;
+        CardView result;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             timestamp = (TextView) itemView.findViewById(R.id.history_ts);
+            result = (CardView) itemView.findViewById(R.id.cardview_result);
         }
     }
 }
