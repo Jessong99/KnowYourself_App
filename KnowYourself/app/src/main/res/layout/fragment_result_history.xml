@@ -5,6 +5,8 @@
     android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/result_history_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"/>
 </LinearLayout>
