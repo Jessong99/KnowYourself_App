@@ -23,8 +23,8 @@ public class PersonalityContentAdapter extends RecyclerView.Adapter<PersonalityC
 
     @NonNull
     @Override
-    public PersonalityContentAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new PersonalityContentAdapter.MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_layout,parent,false));
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new PersonalityContentAdapter.MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_content_layout,parent,false));
     }
 
     @Override

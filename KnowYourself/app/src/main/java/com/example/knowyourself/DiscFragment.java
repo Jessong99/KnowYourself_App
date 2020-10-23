@@ -186,6 +186,8 @@ public class DiscFragment extends Fragment {
                         //save the preferences
                         spEditor.apply();
 
+                        Toast.makeText(getContext(), ts, Toast.LENGTH_SHORT).show();
+
                         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.fragment_container, new SingleResultFragment()).addToBackStack(null).commit();
 
