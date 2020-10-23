@@ -91,7 +91,7 @@ public class DiscAdapter extends RecyclerView.Adapter<DiscAdapter.MyViewHolder>{
         return disc.size();
     }
 
-     class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         TextView textViewQues;
         RadioButton rBsel1,rBsel2,rBsel3,rBsel4;
         RadioGroup mRadioGroup;

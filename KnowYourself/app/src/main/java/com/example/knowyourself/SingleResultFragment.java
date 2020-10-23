@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,18 +22,27 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SingleResultFragment extends Fragment {
 
+    //RecyclerView
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    //Set Up Firebase
     FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference, mDatabaseContent;
 
     //Shared Preferences
     private SharedPreferences mPreferences;
     private String spFileName = "com.example.sharedpreference" ;
+
+    private ArrayList<PersonalityContent> mList;
 
     @Nullable
     @Override
@@ -43,6 +54,11 @@ public class SingleResultFragment extends Fragment {
 
         //initialize shared preferences
         mPreferences = this.getActivity().getSharedPreferences(spFileName, getContext().MODE_PRIVATE);
+
+        //Set Up recyclerView
+        recyclerView = (RecyclerView)view.findViewById(R.id.single_result_recycler_view);// use a linear layout manager
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
 
         if (mFirebaseAuth.getCurrentUser() != null) {
             //get current userID
@@ -84,13 +100,26 @@ public class SingleResultFragment extends Fragment {
                             mDatabaseContent.child(entry.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    mList = new ArrayList<PersonalityContent>();
 
+                                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                                        PersonalityContent p = new PersonalityContent();
+                                        String title = (String) dataSnapshot1.child("title").getValue();
+                                        String content = (String) dataSnapshot1.child("content").getValue();
+
+                                        p.setTitle(title);
+                                        p.setContent(content);
+
+                                        mList.add(p);
+                                    }
+                                    mAdapter = new PersonalityContentAdapter(getContext(),mList);
+                                    recyclerView.setAdapter(mAdapter);
 
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                                    Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
