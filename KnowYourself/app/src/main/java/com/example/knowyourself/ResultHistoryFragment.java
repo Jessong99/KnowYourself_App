@@ -31,7 +31,7 @@ public class ResultHistoryFragment extends Fragment {
 
     //Set Up Firebase
     FirebaseAuth mFirebaseAuth;
-    private DatabaseReference mDatabaseReference, mDatabaseContent;
+    private DatabaseReference mDatabaseReference;
 
     private ArrayList<ResultHistory> mList;
 
