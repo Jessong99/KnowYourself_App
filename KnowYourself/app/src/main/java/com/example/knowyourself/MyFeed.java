@@ -12,7 +12,7 @@ public class MyFeed {
         this.article = article;
         this.fileName = fileName;
     }
-    
+
     public String getTimeStamp() {
         return timeStamp;
     }
