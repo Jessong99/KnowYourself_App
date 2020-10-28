@@ -46,7 +46,7 @@ public class MyFeedAdapter extends RecyclerView.Adapter<MyFeedAdapter.MyViewHold
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.tv_feedTitle);
-            article = (TextView) itemView.findViewById(R.id.tv_feedTitle);
+            article = (TextView) itemView.findViewById(R.id.tv_feedContent);
         }
     }
 }
