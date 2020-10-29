@@ -29,7 +29,7 @@ public class MyFeedAdapter extends RecyclerView.Adapter<MyFeedAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
 
         holder.title.setText(myFeed.get(position).getTitle());
         holder.article.setText(myFeed.get(position).getArticle());

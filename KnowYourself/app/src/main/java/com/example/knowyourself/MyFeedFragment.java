@@ -60,7 +60,7 @@ public class MyFeedFragment extends Fragment {
 
                     f.setTimeStamp(ts);
                     f.setArticle(feedContent);
-                    f.setArticle(feedTitle);
+                    f.setTitle(feedTitle);
                     f.setFileName(fileName);
 
                     mList.add(f);
