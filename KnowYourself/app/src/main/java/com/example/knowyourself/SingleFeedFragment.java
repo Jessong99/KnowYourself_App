@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,6 +50,7 @@ public class SingleFeedFragment extends Fragment {
         tvFeed = (TextView) view.findViewById(R.id.tv_singleFeed);
         tvTitle = (TextView) view.findViewById(R.id.tv_singleTitle);
         tvTS = (TextView) view.findViewById(R.id.tv_singleTS);
+        ivFeed = (ImageView) view.findViewById(R.id.iv_singleFeed);
 
         //initialize shared preferences
         mPreferences = this.getActivity().getSharedPreferences(spFileName, getContext().MODE_PRIVATE);
@@ -72,7 +74,8 @@ public class SingleFeedFragment extends Fragment {
                 storageRef.child("/"+fileName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri url) {
-                        Glide.with(getContext()).load(url).into(ivFeed);
+                        Toast.makeText(view.getContext(),ts,Toast.LENGTH_SHORT);
+                        Glide.with(view.getContext()).load(url).into(ivFeed);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
