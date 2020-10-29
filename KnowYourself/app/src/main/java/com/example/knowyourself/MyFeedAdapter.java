@@ -1,6 +1,7 @@
 package com.example.knowyourself;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +27,10 @@ public class MyFeedAdapter extends RecyclerView.Adapter<MyFeedAdapter.MyViewHold
 
     Context mContext;
     ArrayList<MyFeed> myFeed;
+
+    //Shared Preferences
+    private SharedPreferences mPreferences;
+    private String spFileName = "com.example.sharedpreference" ;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
     // Create a storage reference from our app
@@ -41,7 +48,7 @@ public class MyFeedAdapter extends RecyclerView.Adapter<MyFeedAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
         holder.title.setText(myFeed.get(position).getTitle());
         holder.article.setText(myFeed.get(position).getArticle());
@@ -60,6 +67,25 @@ public class MyFeedAdapter extends RecyclerView.Adapter<MyFeedAdapter.MyViewHold
             }
         });
 
+        holder.cardview_feed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //initialization of editor
+                final SharedPreferences.Editor spEditor = mPreferences.edit();
+                //put key-value pair
+                spEditor.putString("feedTimeStamp",myFeed.get(position).getTimeStamp());
+                //save the preferences
+                spEditor.apply();
+
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                activity.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new SingleFeedFragment()).addToBackStack(null).commit();
+            }
+        });
+
+
+
     }
 
     @Override
@@ -70,12 +96,14 @@ public class MyFeedAdapter extends RecyclerView.Adapter<MyFeedAdapter.MyViewHold
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title,article;
         ImageView photo;
+        CardView cardview_feed;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.tv_feedTitle);
             article = (TextView) itemView.findViewById(R.id.tv_feedContent);
             photo = (ImageView) itemView.findViewById(R.id.imageViewFeed);
+            cardview_feed = (CardView) itemView.findViewById(R.id.cardview_feed);
         }
     }
 }
