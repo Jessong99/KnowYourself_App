@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +21,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class MyFeedAdapter extends RecyclerView.Adapter<MyFeedAdapter.MyViewHolder> {
 
@@ -54,12 +55,16 @@ public class MyFeedAdapter extends RecyclerView.Adapter<MyFeedAdapter.MyViewHold
         holder.article.setText(myFeed.get(position).getArticle());
         String fileName = myFeed.get(position).getFileName();
 
+        //initialize shared preferences
+        mPreferences = this.mContext.getSharedPreferences(spFileName, MODE_PRIVATE);
+
+
         storageRef.child("/"+fileName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri url) {
                 // Got the download URL for 'users/me/profile.png'
                 Glide.with(mContext).load(url).into(holder.photo);
-                Toast.makeText(mContext,"Success" ,Toast.LENGTH_SHORT).show();            }
+            }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
