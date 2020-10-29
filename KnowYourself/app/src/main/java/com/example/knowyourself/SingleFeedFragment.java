@@ -32,11 +32,15 @@ public class SingleFeedFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_single_feed, container, false);
 
+        tvFeed = (TextView) view.findViewById(R.id.tv_singleFeed);
+        tvTitle = (TextView) view.findViewById(R.id.tv_singleTitle);
+        tvTS = (TextView) view.findViewById(R.id.tv_singleTS);
+
         //initialize shared preferences
         mPreferences = this.getActivity().getSharedPreferences(spFileName, getContext().MODE_PRIVATE);
 
         //get timeStamp of result
-        String ts = mPreferences.getString("feedTimeStamp","none");
+        final String ts = mPreferences.getString("feedTimeStamp","none");
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference()
                 .child("myFeed");
@@ -47,6 +51,9 @@ public class SingleFeedFragment extends Fragment {
                 String title = (String) snapshot.child("title").getValue();
                 String article = (String) snapshot.child("article").getValue();
 
+                tvTitle.setText(title);
+                tvFeed.setText(article);
+                tvTS.setText(ts);
 
             }
 
