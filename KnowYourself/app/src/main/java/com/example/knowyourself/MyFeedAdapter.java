@@ -62,7 +62,6 @@ public class MyFeedAdapter extends RecyclerView.Adapter<MyFeedAdapter.MyViewHold
         storageRef.child("/"+fileName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri url) {
-                // Got the download URL for 'users/me/profile.png'
                 Glide.with(mContext).load(url).into(holder.photo);
             }
         }).addOnFailureListener(new OnFailureListener() {
