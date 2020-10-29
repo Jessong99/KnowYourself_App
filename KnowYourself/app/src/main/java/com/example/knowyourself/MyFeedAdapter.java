@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,13 +23,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class MyFeedAdapter extends RecyclerView.Adapter<MyFeedAdapter.MyViewHolder> {
+public class MyFeedAdapter extends RecyclerView.Adapter<MyFeedAdapter.MyViewHolder> implements Filterable {
 
     Context mContext;
     ArrayList<MyFeed> myFeed;
+    ArrayList<MyFeed> myFeedFull;
 
     //Shared Preferences
     private SharedPreferences mPreferences;
@@ -40,6 +44,7 @@ public class MyFeedAdapter extends RecyclerView.Adapter<MyFeedAdapter.MyViewHold
     public MyFeedAdapter(Context c, ArrayList<MyFeed> list){
         mContext = c;
         myFeed = list;
+        myFeedFull = new ArrayList<>(myFeed);
     }
 
     @NonNull
@@ -110,4 +115,39 @@ public class MyFeedAdapter extends RecyclerView.Adapter<MyFeedAdapter.MyViewHold
             cardview_feed = (CardView) itemView.findViewById(R.id.cardview_feed);
         }
     }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<MyFeed> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(myFeedFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (MyFeed item : myFeedFull) {
+                    if (item.getTitle().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            myFeed.clear();
+            myFeed.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }

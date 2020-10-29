@@ -1,9 +1,17 @@
 package com.example.knowyourself;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,16 +35,19 @@ public class MyFeedFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
 
     private DatabaseReference mDatabaseReference;
-
     private ArrayList<MyFeed> mList;
+
+    private MenuItem searchItem;
+    private MyFeedAdapter mMyFeedAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view =  inflater.inflate(R.layout.fragment_myfeed,container,false);
+        final View view = inflater.inflate(R.layout.fragment_myfeed, container, false);
+        setHasOptionsMenu(true);
 
         //Set Up recyclerView
-        recyclerView = (RecyclerView)view.findViewById(R.id.myfeed_recycler_view);// use a linear layout manager
+        recyclerView = (RecyclerView) view.findViewById(R.id.myfeed_recycler_view);// use a linear layout manager
         layoutManager = new LinearLayoutManager(getContext());
         ((LinearLayoutManager) layoutManager).setReverseLayout(true);
         ((LinearLayoutManager) layoutManager).setStackFromEnd(true);
@@ -65,8 +76,9 @@ public class MyFeedFragment extends Fragment {
 
                     mList.add(f);
                 }
-                mAdapter = new MyFeedAdapter(getContext(),mList);
-                recyclerView.setAdapter(mAdapter);
+                mMyFeedAdapter = new MyFeedAdapter(getContext(), mList);
+                recyclerView.setAdapter(mMyFeedAdapter);
+                recyclerView.getAdapter().notifyDataSetChanged();
             }
 
             @Override
@@ -76,6 +88,51 @@ public class MyFeedFragment extends Fragment {
             }
         });
 
+
         return view;
     }
+
+    //... menu option
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.search_menu,menu);
+        final InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        searchItem = menu.findItem(R.id.app_bar_search);
+
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setIconifiedByDefault(false);
+        searchView.requestFocus();
+
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                imm.showSoftInput(getActivity().getCurrentFocus(), 0);
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                return true;
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                imm.hideSoftInputFromWindow((IBinder) getActivity().getParent(), 0);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mMyFeedAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+    }
+
+
 }
