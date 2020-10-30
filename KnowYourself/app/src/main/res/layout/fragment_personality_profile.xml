@@ -2,14 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:padding="10dp"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="What is DISC?"
+        android:textAlignment="center"
+        android:paddingBottom="30dp"
+        android:textSize="36sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
         android:orientation="horizontal">
 
         <Button
@@ -41,6 +48,10 @@
 
     </LinearLayout>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="5dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,7 +62,11 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_weight="1"
-            android:text="C" />
+            android:background="@drawable/radius_bottom_left"
+            android:text="     C"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp" />
 
         <Space
             android:layout_width="5dp"
