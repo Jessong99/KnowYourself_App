@@ -62,6 +62,8 @@ public class HomeFragment extends Fragment {
             btnPersonalityProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, new PersonalityProfileFragment()).addToBackStack(null).commit();
 
                 }
             });
