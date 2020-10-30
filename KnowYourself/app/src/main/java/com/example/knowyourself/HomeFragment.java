@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeFragment extends Fragment {
 
-    private Button btnDISCTest, btnResultHisotry, btnMyFeed, btnPersonalityProfile;
+    private Button btnDISCTest, btnResultHisotry, btnMyFeed, btnPersonalityProfile, btnProfile, btnAboutUs;
     FirebaseAuth mFirebaseAuth;
 
     //Shared Preferences
@@ -34,6 +34,8 @@ public class HomeFragment extends Fragment {
         btnResultHisotry = (Button) view.findViewById(R.id.btn_DISCResult);
         btnPersonalityProfile = (Button) view.findViewById(R.id.btn_profile);
         btnMyFeed = (Button) view.findViewById(R.id.btn_myFeed);
+        btnProfile = (Button) view.findViewById(R.id.btn_user_profile);
+        btnAboutUs = (Button) view.findViewById(R.id.btn_about_us_home);
 
         if (mFirebaseAuth.getCurrentUser() != null) {
             //implement DISC test
@@ -74,6 +76,22 @@ public class HomeFragment extends Fragment {
                 public void onClick(View view) {
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.fragment_container, new MyFeedFragment()).addToBackStack(null).commit();
+                }
+            });
+
+            btnProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, new ProfileFragment()).addToBackStack(null).commit();
+                }
+            });
+
+            btnAboutUs.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, new AboutUsFragment()).addToBackStack(null).commit();
                 }
             });
 
