@@ -30,6 +30,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
@@ -41,23 +44,33 @@ public class RegisterFragment extends Fragment implements DatePickerDialog.OnDat
     private TextView signInNow;
     private Spinner mSpinner;
     private String item;
+    private String bDay = "";
+    private String bMonth = "";
+    private String bYear = "";
 
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mFirebaseAuth;
+    private DatabaseReference mDatabaseReference;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_register, container, false);
-        buttonR = (Button) view.findViewById(R.id.btn_register);
+
         eTextEmailR = (EditText) view.findViewById(R.id.editText_emailR);
         eTextPasswordR = (EditText) view.findViewById(R.id.editText_passwordR);
         firstName = (EditText) view.findViewById(R.id.editText_fNameR);
         name = (EditText) view.findViewById(R.id.editText_lNameR);
         signInNow = (TextView) view.findViewById(R.id.signIn_now);
-        imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        buttonR = (Button) view.findViewById(R.id.btn_register);
         mSpinner = (Spinner) view.findViewById(R.id.spinnerGender);
         btnDate = (Button) view.findViewById(R.id.btn_date);
+
+        imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference()
+                .child("users");
 
         //create a list of items for the spinner.
         String[] items = new String[]{"Male", "Female"};
@@ -103,12 +116,31 @@ public class RegisterFragment extends Fragment implements DatePickerDialog.OnDat
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 String emailR = eTextEmailR.getText().toString().trim();
                 String passwordR = eTextPasswordR.getText().toString().trim();
-                String firstR = firstName.getText().toString().trim();
-                String nameR = name.getText().toString().trim();
+                final String firstR = firstName.getText().toString().trim();
+                final String nameR = name.getText().toString().trim();
+                String dateR = btnDate.getText().toString().trim();
+
+                if(TextUtils.isEmpty(nameR)){
+                    //last name is empty
+                    Snackbar.make(view, "Please enter the last name.", Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(firstR)){
+                    //first name is empty
+                    Snackbar.make(view, "Please enter the first name.", Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
 
                 if(TextUtils.isEmpty(emailR)){
                     //email is empty
                     Snackbar.make(view, "Please enter the email.", Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (dateR.equals("Enter your birth date")){
+                    //birth date is empty
+                    Snackbar.make(view, "Please enter the birth date.", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -125,17 +157,6 @@ public class RegisterFragment extends Fragment implements DatePickerDialog.OnDat
                     return;
                 }
 
-                if(TextUtils.isEmpty(nameR)){
-                    //email is empty
-                    Snackbar.make(view, "Please enter the name.", Snackbar.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if(TextUtils.isEmpty(firstR)){
-                    //email is empty
-                    Snackbar.make(view, "Please enter the first name.", Snackbar.LENGTH_SHORT).show();
-                    return;
-                }
                 mProgressDialog = new ProgressDialog(getActivity());
                 mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -151,6 +172,18 @@ public class RegisterFragment extends Fragment implements DatePickerDialog.OnDat
                                 if (task.isSuccessful()) {
                                     //if registration is complete
                                     Toast.makeText(getActivity(), "Registered Successfully", Toast.LENGTH_SHORT).show();
+
+                                    //get current userID
+                                    FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                                    String uid = user.getUid();
+
+                                    mDatabaseReference.child(uid).child("firstName").setValue(firstR);
+                                    mDatabaseReference.child(uid).child("lastName").setValue(nameR);
+                                    mDatabaseReference.child(uid).child("birthDate").setValue(bDay);
+                                    mDatabaseReference.child(uid).child("birthMonth").setValue(bMonth);
+                                    mDatabaseReference.child(uid).child("birthYear").setValue(bYear);
+                                    mDatabaseReference.child(uid).child("gender").setValue(item);
+
                                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                                     fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
                                 }
@@ -181,6 +214,9 @@ public class RegisterFragment extends Fragment implements DatePickerDialog.OnDat
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
         String date = "Birth date : " + dayOfMonth + " - " + month + " - " + year;
+        bDay = String.valueOf(dayOfMonth);
+        bMonth = String.valueOf(month);
+        bYear = String.valueOf(year);
         btnDate.setText(date);
     }
 }
