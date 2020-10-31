@@ -1,5 +1,6 @@
 package com.example.knowyourself;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -33,6 +34,7 @@ public class MyFeedFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private ProgressDialog mProgressDialog;
 
     private DatabaseReference mDatabaseReference;
     private ArrayList<MyFeed> mList;
@@ -45,6 +47,10 @@ public class MyFeedFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_myfeed, container, false);
         setHasOptionsMenu(true);
+
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setMessage("Loading MyFeed...");
+        mProgressDialog.show();
 
         //Set Up recyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.myfeed_recycler_view);// use a linear layout manager
@@ -79,6 +85,7 @@ public class MyFeedFragment extends Fragment {
                 mMyFeedAdapter = new MyFeedAdapter(getContext(), mList);
                 recyclerView.setAdapter(mMyFeedAdapter);
                 recyclerView.getAdapter().notifyDataSetChanged();
+                mProgressDialog.dismiss();
             }
 
             @Override
