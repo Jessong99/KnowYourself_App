@@ -85,6 +85,7 @@ public class MyFeedFragment extends Fragment {
                 mMyFeedAdapter = new MyFeedAdapter(getContext(), mList);
                 recyclerView.setAdapter(mMyFeedAdapter);
                 recyclerView.getAdapter().notifyDataSetChanged();
+                mProgressDialog.dismiss();
             }
 
             @Override
@@ -94,7 +95,6 @@ public class MyFeedFragment extends Fragment {
             }
         });
 
-        mProgressDialog.dismiss();
 
         return view;
     }

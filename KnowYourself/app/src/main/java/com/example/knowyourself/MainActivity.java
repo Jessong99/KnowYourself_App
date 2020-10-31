@@ -2,8 +2,6 @@ package com.example.knowyourself;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -54,13 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
-        }
-
-        if (mAuth.getCurrentUser() != null) {
-            View headerView = navigationView.getHeaderView(0);
-            TextView navUsername = (TextView) headerView.findViewById(R.id.header_name);
-            TextView navUserEmail = (TextView) headerView.findViewById(R.id.header_email);
-            navUsername.setText(user.getEmail());
         }
 
     }
