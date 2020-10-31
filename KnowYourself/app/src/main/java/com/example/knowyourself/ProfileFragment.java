@@ -51,26 +51,25 @@ public class ProfileFragment extends Fragment {
         btnLogOut = (Button) view.findViewById(R.id.btn_logOut);
 
         if (mFirebaseAuth.getCurrentUser() != null) {
-            //get current user email and display on profile
+
             FirebaseUser user = mFirebaseAuth.getCurrentUser();
             //get current user id
             mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users");
 
             //retrieved data from firebase based on given userID
-            mDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            mDatabaseReference.child(mFirebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.child("noteText").getValue()!=null) {
-                        gender = dataSnapshot.child("gender").getValue().toString();
-                        //set text in text view
-                        mTextViewUser.setText("Welcome " + dataSnapshot.child("firstName").getValue().toString());
-                        tvFullName.setText(dataSnapshot.child("firstName").getValue().toString() + " " +
-                                                dataSnapshot.child("lastName").getValue().toString());
-                        tvGender.setText(gender);
-                        tvBirthdate.setText(dataSnapshot.child("birthDate").getValue().toString() + " - " +
-                                                dataSnapshot.child("birthMonth").getValue().toString() + " - " +
-                                                dataSnapshot.child("birthYear").getValue().toString());
-                    }
+
+                    gender = dataSnapshot.child("gender").getValue().toString();
+                    //set text in text view
+                    mTextViewUser.setText("Welcome " + dataSnapshot.child("firstName").getValue().toString());
+                    tvFullName.setText(dataSnapshot.child("firstName").getValue().toString() + " " +
+                            dataSnapshot.child("lastName").getValue().toString());
+                    tvGender.setText(gender);
+                    tvBirthdate.setText(dataSnapshot.child("birthDate").getValue().toString() + " - " +
+                            dataSnapshot.child("birthMonth").getValue().toString() + " - " +
+                            dataSnapshot.child("birthYear").getValue().toString());
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
