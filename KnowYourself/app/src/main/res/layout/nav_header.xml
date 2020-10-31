@@ -10,11 +10,10 @@
     android:layout_height="176dp">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher_round"
-        tools:srcCompat="@mipmap/ic_cropped_logo" />
+        android:src="@mipmap/ic_cropped_logo" />
 
     <TextView
         android:id="@+id/header_name"
