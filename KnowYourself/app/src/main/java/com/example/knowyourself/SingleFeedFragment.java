@@ -2,6 +2,7 @@ package com.example.knowyourself;
 
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +26,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.TimeZone;
 
 public class SingleFeedFragment extends Fragment {
 
@@ -62,15 +69,24 @@ public class SingleFeedFragment extends Fragment {
                 .child("myFeed");
 
         mDatabaseReference.child(ts).addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String title = (String) snapshot.child("title").getValue();
                 String article = (String) snapshot.child("article").getValue();
                 String fileName = (String) snapshot.child("fileName").getValue();
 
+                Long time = Long. parseLong(ts);
+                LocalDateTime triggerTime =
+                        LocalDateTime.ofInstant(Instant.ofEpochMilli(time),
+                                TimeZone.getDefault().toZoneId());
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                String formattedDateTime = triggerTime.format(formatter);
+
                 tvTitle.setText(title);
                 tvFeed.setText(article);
-                tvTS.setText(ts);
+                tvTS.setText(formattedDateTime);
                 storageRef.child("/"+fileName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri url) {

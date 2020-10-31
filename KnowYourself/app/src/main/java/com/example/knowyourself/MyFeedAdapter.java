@@ -93,8 +93,6 @@ public class MyFeedAdapter extends RecyclerView.Adapter<MyFeedAdapter.MyViewHold
             }
         });
 
-
-
     }
 
     @Override

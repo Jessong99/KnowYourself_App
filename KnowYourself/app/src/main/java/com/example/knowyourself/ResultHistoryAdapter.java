@@ -2,17 +2,23 @@ package com.example.knowyourself;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -36,13 +42,21 @@ public class ResultHistoryAdapter extends RecyclerView.Adapter<ResultHistoryAdap
         return new ResultHistoryAdapter.MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_history_layout,parent,false));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
         //initialize shared preferences
         mPreferences = this.mContext.getSharedPreferences(spFileName, MODE_PRIVATE);
+        String ts = result.get(position).getTimestamp();
+        Long time = Long. parseLong(ts);
+        LocalDateTime triggerTime =
+                LocalDateTime.ofInstant(Instant.ofEpochMilli(time),
+                        TimeZone.getDefault().toZoneId());
 
-        holder.timestamp.setText("Test taken on: " + result.get(position).getTimestamp());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedDateTime = triggerTime.format(formatter);
+        holder.timestamp.setText("Test taken on: " + formattedDateTime);
         holder.result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
