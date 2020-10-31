@@ -1,5 +1,6 @@
 package com.example.knowyourself;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,14 +31,16 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class RegisterFragment extends Fragment {
+import java.util.Calendar;
 
-    private EditText eTextEmailR;
-    private EditText eTextPasswordR;
+public class RegisterFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
+
+    private EditText eTextEmailR, eTextPasswordR, firstName, name;
     private InputMethodManager imm;
-    private Button button;
+    private Button buttonR, btnDate;
     private TextView signInNow;
     private Spinner mSpinner;
+    private String item;
 
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mFirebaseAuth;
@@ -45,12 +49,15 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_register, container, false);
-        button = (Button) view.findViewById(R.id.btn_register);
+        buttonR = (Button) view.findViewById(R.id.btn_register);
         eTextEmailR = (EditText) view.findViewById(R.id.editText_emailR);
         eTextPasswordR = (EditText) view.findViewById(R.id.editText_passwordR);
+        firstName = (EditText) view.findViewById(R.id.editText_fNameR);
+        name = (EditText) view.findViewById(R.id.editText_lNameR);
         signInNow = (TextView) view.findViewById(R.id.signIn_now);
         imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         mSpinner = (Spinner) view.findViewById(R.id.spinnerGender);
+        btnDate = (Button) view.findViewById(R.id.btn_date);
 
         //create a list of items for the spinner.
         String[] items = new String[]{"Male", "Female"};
@@ -63,12 +70,20 @@ public class RegisterFragment extends Fragment {
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                item = adapterView.getItemAtPosition(i).toString();
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+
+        btnDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePickerDialog();
             }
         });
 
@@ -81,13 +96,15 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
 
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 String emailR = eTextEmailR.getText().toString().trim();
                 String passwordR = eTextPasswordR.getText().toString().trim();
+                String firstR = firstName.getText().toString().trim();
+                String nameR = name.getText().toString().trim();
 
                 if(TextUtils.isEmpty(emailR)){
                     //email is empty
@@ -108,6 +125,17 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
 
+                if(TextUtils.isEmpty(nameR)){
+                    //email is empty
+                    Snackbar.make(view, "Please enter the name.", Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(firstR)){
+                    //email is empty
+                    Snackbar.make(view, "Please enter the first name.", Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
                 mProgressDialog = new ProgressDialog(getActivity());
                 mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -138,5 +166,21 @@ public class RegisterFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void showDatePickerDialog(){
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                getContext(),this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+        String date = "Birth date : " + dayOfMonth + " - " + month + " - " + year;
+        btnDate.setText(date);
     }
 }

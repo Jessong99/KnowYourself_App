@@ -48,25 +48,32 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
 
-        <Spinner
-            android:id="@+id/spinnerGender"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+        <TextView
+            android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:spinnerMode="dropdown"/>
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:text="Select your gender"
+            android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/editText_date"
+        <Spinner
+            android:id="@+id/spinnerGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:spinnerMode="dropdown" />
+
+        <Button
+            android:id="@+id/btn_date"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your birth date"
-            android:ems="10"
-            android:inputType="date" />
+            android:text="Enter your birth date"/>
 
         <EditText
             android:layout_marginTop="10dp"
