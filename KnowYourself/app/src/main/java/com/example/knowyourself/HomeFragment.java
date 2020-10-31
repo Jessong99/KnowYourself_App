@@ -52,9 +52,9 @@ public class HomeFragment extends Fragment {
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.fragment_container, new DiscFragment()).addToBackStack(null).commit();
                 }else{
-                    Toast.makeText(getContext(),"Please sign in to take the DISC test.",Toast.LENGTH_SHORT).show();
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
+                    Toast.makeText(getContext(),"Please sign in to take the DISC test.",Toast.LENGTH_SHORT).show();
                 }
             }
         });

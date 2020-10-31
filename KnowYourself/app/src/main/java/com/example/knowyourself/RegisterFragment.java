@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ public class RegisterFragment extends Fragment {
     private InputMethodManager imm;
     private Button button;
     private TextView signInNow;
+    private Spinner mSpinner;
 
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mFirebaseAuth;
@@ -46,6 +50,28 @@ public class RegisterFragment extends Fragment {
         eTextPasswordR = (EditText) view.findViewById(R.id.editText_passwordR);
         signInNow = (TextView) view.findViewById(R.id.signIn_now);
         imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        mSpinner = (Spinner) view.findViewById(R.id.spinnerGender);
+
+        //create a list of items for the spinner.
+        String[] items = new String[]{"Male", "Female"};
+        //create an adapter to describe how the items are displayed, adapters are used in several places in android.
+        //There are multiple variations of this, but this is the basic variant.
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
+        //set the spinners adapter to the previously created one.
+        mSpinner.setAdapter(adapter);
+
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
 
         signInNow.setOnClickListener(new View.OnClickListener() {
             @Override

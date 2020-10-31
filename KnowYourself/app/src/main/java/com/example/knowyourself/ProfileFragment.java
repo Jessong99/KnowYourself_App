@@ -1,6 +1,5 @@
 package com.example.knowyourself;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -52,6 +50,7 @@ public class ProfileFragment extends Fragment {
         }else{
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
+            Toast.makeText(getContext(),"Please sign in to view profile.",Toast.LENGTH_SHORT).show();
 
         }
         return view;

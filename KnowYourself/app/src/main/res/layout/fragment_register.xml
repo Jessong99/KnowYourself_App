@@ -7,7 +7,7 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:orientation="vertical"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -21,30 +21,47 @@
             android:textStyle="bold" />
 
         <EditText
-            android:layout_margin="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:hint="Enter your First Name"
             android:id="@+id/editText_fNameR"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
 
         <EditText
-            android:layout_margin="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:hint="Enter your Last Name"
             android:id="@+id/editText_lNameR"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
 
         <EditText
-            android:layout_margin="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:inputType="textEmailAddress"
             android:hint="Enter your email"
             android:id="@+id/editText_emailR"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
 
+        <Spinner
+            android:id="@+id/spinnerGender"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"/>
+
         <EditText
             android:id="@+id/editText_date"
-            android:layout_margin="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter your birth date"
@@ -52,7 +69,9 @@
             android:inputType="date" />
 
         <EditText
-            android:layout_margin="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:inputType="textPassword"
             android:hint="Enter your password"
             android:id="@+id/editText_passwordR"
