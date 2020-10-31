@@ -2,6 +2,7 @@ package com.example.knowyourself;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -39,6 +40,9 @@ public class SignInFragment extends Fragment{
     private FirebaseAuth mFirebaseAuth;
 
     private InputMethodManager imm;
+    //Shared Preferences
+    private SharedPreferences mPreferences;
+    private String spFileName = "com.example.sharedpreference" ;
 
 
     @Nullable
@@ -54,6 +58,9 @@ public class SignInFragment extends Fragment{
 
         // Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
+
+        //initialize shared preferences
+        mPreferences = this.getActivity().getSharedPreferences(spFileName, getContext().MODE_PRIVATE);
 
         btnRegisterNow.setOnClickListener(new View.OnClickListener(){
 
@@ -104,6 +111,14 @@ public class SignInFragment extends Fragment{
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 mProgressDialog.dismiss();
                                 if (task.isSuccessful()){
+
+                                    //initialization of editor
+                                    final SharedPreferences.Editor spEditor = mPreferences.edit();
+                                    //put key-value pair
+                                    spEditor.putString("signIn","Yes");
+                                    //save the preferences
+                                    spEditor.apply();
+
                                     Toast.makeText(getActivity(),"Sign In Successfully",Toast.LENGTH_SHORT).show();
                                     //Redirect to profile
                                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();

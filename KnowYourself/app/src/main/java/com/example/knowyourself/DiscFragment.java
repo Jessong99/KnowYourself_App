@@ -45,162 +45,168 @@ public class DiscFragment extends Fragment {
     //Shared Preferences
     private SharedPreferences mPreferences;
     private String spFileName = "com.example.sharedpreference" ;
+    String signIn = "No";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view =  inflater.inflate(R.layout.fragmemt_disc,container,false);
 
-        mProgressDialog = new ProgressDialog(getActivity());
-        mProgressDialog.setMessage("Loading Test...");
-        mProgressDialog.show();
-
         //initialize shared preferences
         mPreferences = this.getActivity().getSharedPreferences(spFileName, getContext().MODE_PRIVATE);
+        signIn = mPreferences.getString("signIn", "No");
 
-        //Set Up recyclerView
-        recyclerView = (RecyclerView)view.findViewById(R.id.disc_recycler_view);// use a linear layout manager
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        if (signIn.equals("Yes")) {
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setMessage("Loading Test...");
+            mProgressDialog.show();
 
+            //Set Up recyclerView
+            recyclerView = (RecyclerView)view.findViewById(R.id.disc_recycler_view);// use a linear layout manager
+            layoutManager = new LinearLayoutManager(getContext());
+            recyclerView.setLayoutManager(layoutManager);
 
-        //retrieve data from firebase
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference()
-                .child("assessment")
-                .child("DISC")
-                .child("ques");
+            //retrieve data from firebase
+            mDatabaseReference = FirebaseDatabase.getInstance().getReference()
+                    .child("assessment")
+                    .child("DISC")
+                    .child("ques");
 
-        //todo mDatabaseReference.keepSynced(true);
-        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mList = new ArrayList<DISC>();
+            //todo mDatabaseReference.keepSynced(true);
+            mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    mList = new ArrayList<DISC>();
 
-                //get ques children
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    DISC d = new DISC();
-                    String ques = dataSnapshot1.getKey();
-                    int counter = 1;
-                    //get all selection & type in ques
-                    for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
-                        String sel = (String) dataSnapshot2.child("selection").getValue();
-                        String type = (String) dataSnapshot2.child("type").getValue();
-                        //save into arrayList
-                        switch (counter){
-                            case 1:
-                                d.setSel1(sel);
-                                d.setType1(type);
+                    //get ques children
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                        DISC d = new DISC();
+                        String ques = dataSnapshot1.getKey();
+                        int counter = 1;
+                        //get all selection & type in ques
+                        for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
+                            String sel = (String) dataSnapshot2.child("selection").getValue();
+                            String type = (String) dataSnapshot2.child("type").getValue();
+                            //save into arrayList
+                            switch (counter){
+                                case 1:
+                                    d.setSel1(sel);
+                                    d.setType1(type);
+                                    break;
+                                case 2:
+                                    d.setSel2(sel);
+                                    d.setType2(type);
+                                    break;
+                                case 3:
+                                    d.setSel3(sel);
+                                    d.setType3(type);
+                                    break;
+                                case 4:
+                                    d.setSel4(sel);
+                                    d.setType4(type);
+                                    break;
+                                default:
+                                    Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                            counter++;
+                        }
+                        d.setQues(ques);
+                        mList.add(d);
+                        totalQue++;
+                    }
+                    mAdapter = new DiscAdapter(getContext(),mList);
+                    recyclerView.setAdapter(mAdapter);
+                    mProgressDialog.dismiss();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            btnSubmitTest = (Button)view.findViewById(R.id.btnSubmitTest);
+            btnSubmitTest.setOnClickListener((new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int noD = 0;
+                    int noI = 0;
+                    int noS = 0;
+                    int noC = 0;
+
+                    for (int m = 0; m <= totalQue; m++) {
+                        String position = String.valueOf(m);
+                        String getType = mPreferences.getString(position, "none");
+
+                        //Count score for each type
+                        switch (getType) {
+                            case "D":
+                                noD++;
                                 break;
-                            case 2:
-                                d.setSel2(sel);
-                                d.setType2(type);
+                            case "I":
+                                noI++;
                                 break;
-                            case 3:
-                                d.setSel3(sel);
-                                d.setType3(type);
+                            case "S":
+                                noS++;
                                 break;
-                            case 4:
-                                d.setSel4(sel);
-                                d.setType4(type);
+                            case "C":
+                                noC++;
                                 break;
                             default:
-                                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                                 break;
                         }
-                        counter++;
                     }
-                    d.setQues(ques);
-                    mList.add(d);
-                    totalQue++;
-                }
-                mAdapter = new DiscAdapter(getContext(),mList);
-                recyclerView.setAdapter(mAdapter);
-                mProgressDialog.dismiss();
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    int totalSelected = noD + noI + noS + noC;
 
-        btnSubmitTest = (Button)view.findViewById(R.id.btnSubmitTest);
-        btnSubmitTest.setOnClickListener((new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int noD = 0;
-                int noI = 0;
-                int noS = 0;
-                int noC = 0;
+                    //make sure all question is completed
+                    if (totalSelected != totalQue) {
+                        Toast.makeText(getContext(), "Please complete all questions.", Toast.LENGTH_SHORT).show();
+                    }else {
 
-                for (int m = 0; m <= totalQue; m++) {
-                    String position = String.valueOf(m);
-                    String getType = mPreferences.getString(position, "none");
+                        //check if user currently log in
+                        mFirebaseAuth = FirebaseAuth.getInstance();
+                        if (mFirebaseAuth.getCurrentUser() != null) {
+                            //get current userID
+                            FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                            String uid = user.getUid();
+                            //get current timeStamp
+                            Long tsLong = System.currentTimeMillis()/1000;
+                            String ts = tsLong.toString();
 
-                    //Count score for each type
-                    switch (getType) {
-                        case "D":
-                            noD++;
-                            break;
-                        case "I":
-                            noI++;
-                            break;
-                        case "S":
-                            noS++;
-                            break;
-                        case "C":
-                            noC++;
-                            break;
-                        default:
-                            break;
+                            mDatabaseReference2 = FirebaseDatabase.getInstance().getReference()
+                                    .child("assessment")
+                                    .child("DISC")
+                                    .child("result")
+                                    .child(uid)
+                                    .child(ts);
+
+                            //save DISC test result into Firebase
+                            mDatabaseReference2.child("D").setValue(noD);
+                            mDatabaseReference2.child("I").setValue(noI);
+                            mDatabaseReference2.child("S").setValue(noS);
+                            mDatabaseReference2.child("C").setValue(noC);
+
+                            //initialization of editor
+                            final SharedPreferences.Editor spEditor = mPreferences.edit();
+                            //put key-value pair
+                            spEditor.putString("resultTimeStamp",ts);
+                            //save the preferences
+                            spEditor.apply();
+
+                            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                            fragmentTransaction.replace(R.id.fragment_container, new SingleResultFragment()).addToBackStack(null).commit();
+
+                        }
                     }
                 }
-
-                int totalSelected = noD + noI + noS + noC;
-
-                //make sure all question is completed
-                if (totalSelected != totalQue) {
-                    Toast.makeText(getContext(), "Please complete all questions.", Toast.LENGTH_SHORT).show();
-                }else {
-
-                    //check if user currently log in
-                    mFirebaseAuth = FirebaseAuth.getInstance();
-                    if (mFirebaseAuth.getCurrentUser() != null) {
-                        //get current userID
-                        FirebaseUser user = mFirebaseAuth.getCurrentUser();
-                        String uid = user.getUid();
-                        //get current timeStamp
-                        Long tsLong = System.currentTimeMillis()/1000;
-                        String ts = tsLong.toString();
-
-                        mDatabaseReference2 = FirebaseDatabase.getInstance().getReference()
-                                .child("assessment")
-                                .child("DISC")
-                                .child("result")
-                                .child(uid)
-                                .child(ts);
-
-                        //save DISC test result into Firebase
-                        mDatabaseReference2.child("D").setValue(noD);
-                        mDatabaseReference2.child("I").setValue(noI);
-                        mDatabaseReference2.child("S").setValue(noS);
-                        mDatabaseReference2.child("C").setValue(noC);
-
-
-                        //initialization of editor
-                        final SharedPreferences.Editor spEditor = mPreferences.edit();
-                        //put key-value pair
-                        spEditor.putString("resultTimeStamp",ts);
-                        //save the preferences
-                        spEditor.apply();
-
-                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.fragment_container, new SingleResultFragment()).addToBackStack(null).commit();
-
-                    }
-                }
-            }
-        }));
+            }));
+        }else {
+            Toast.makeText(getContext(),"Please sign in to view result history.",Toast.LENGTH_SHORT).show();
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
+        }
 
         return view;
     }

@@ -1,6 +1,7 @@
 package com.example.knowyourself;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,10 @@ public class ResultHistoryFragment extends Fragment {
     //Set Up Firebase
     FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference;
+    //Shared Preferences
+    private SharedPreferences mPreferences;
+    private String spFileName = "com.example.sharedpreference" ;
+    String signIn = "No";
 
     private ArrayList<ResultHistory> mList;
 
@@ -42,54 +47,64 @@ public class ResultHistoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view =  inflater.inflate(R.layout.fragment_result_history,container,false);
 
-        mProgressDialog = new ProgressDialog(getActivity());
-        mProgressDialog.setMessage("Loading Result History...");
-        mProgressDialog.show();
+        //initialize shared preferences
+        mPreferences = this.getActivity().getSharedPreferences(spFileName, getContext().MODE_PRIVATE);
+        signIn = mPreferences.getString("signIn", "No");
 
-        //Set Up recyclerView
-        recyclerView = (RecyclerView)view.findViewById(R.id.result_history_recycler_view);// use a linear layout manager
-        layoutManager = new LinearLayoutManager(getContext());
-        ((LinearLayoutManager) layoutManager).setReverseLayout(true);
-        ((LinearLayoutManager) layoutManager).setStackFromEnd(true);
-        recyclerView.setLayoutManager(layoutManager);
+        if (signIn.equals("Yes")) {
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setMessage("Loading Result History...");
+            mProgressDialog.show();
 
-        //check if user currently log in
-        mFirebaseAuth = FirebaseAuth.getInstance();
+            //Set Up recyclerView
+            recyclerView = (RecyclerView)view.findViewById(R.id.result_history_recycler_view);// use a linear layout manager
+            layoutManager = new LinearLayoutManager(getContext());
+            ((LinearLayoutManager) layoutManager).setReverseLayout(true);
+            ((LinearLayoutManager) layoutManager).setStackFromEnd(true);
+            recyclerView.setLayoutManager(layoutManager);
 
-        if (mFirebaseAuth.getCurrentUser() != null) {
-            //get current userID
-            FirebaseUser user = mFirebaseAuth.getCurrentUser();
-            String uid = user.getUid();
+            //check if user currently log in
+            mFirebaseAuth = FirebaseAuth.getInstance();
 
-            mDatabaseReference = FirebaseDatabase.getInstance().getReference()
-                    .child("assessment")
-                    .child("DISC")
-                    .child("result")
-                    .child(uid);
+            if (mFirebaseAuth.getCurrentUser() != null) {
+                //get current userID
+                FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                String uid = user.getUid();
 
-            mDatabaseReference.orderByKey().addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    mList = new ArrayList<ResultHistory>();
+                mDatabaseReference = FirebaseDatabase.getInstance().getReference()
+                        .child("assessment")
+                        .child("DISC")
+                        .child("result")
+                        .child(uid);
 
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        ResultHistory r = new ResultHistory();
-                        String ts = (String) dataSnapshot1.getKey();
-                        r.setTimestamp(ts);
-                        mList.add(r);
+                mDatabaseReference.orderByKey().addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        mList = new ArrayList<ResultHistory>();
+
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            ResultHistory r = new ResultHistory();
+                            String ts = (String) dataSnapshot1.getKey();
+                            r.setTimestamp(ts);
+                            mList.add(r);
+                        }
+                        mAdapter = new ResultHistoryAdapter(getContext(),mList);
+                        recyclerView.setAdapter(mAdapter);
+                        mProgressDialog.dismiss();
                     }
-                    mAdapter = new ResultHistoryAdapter(getContext(),mList);
-                    recyclerView.setAdapter(mAdapter);
-                    mProgressDialog.dismiss();
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
-                }
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-        }else{
+            }else{
+                Toast.makeText(getContext(),"Please sign in to view result history.",Toast.LENGTH_SHORT).show();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
+            }
+        }else {
             Toast.makeText(getContext(),"Please sign in to view result history.",Toast.LENGTH_SHORT).show();
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
