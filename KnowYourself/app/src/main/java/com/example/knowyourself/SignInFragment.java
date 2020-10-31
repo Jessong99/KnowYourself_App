@@ -122,7 +122,7 @@ public class SignInFragment extends Fragment{
                                     Toast.makeText(getActivity(),"Sign In Successfully",Toast.LENGTH_SHORT).show();
                                     //Redirect to profile
                                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                                    fragmentTransaction.replace(R.id.fragment_container, new ProfileFragment())
+                                    fragmentTransaction.replace(R.id.fragment_container, new HomeFragment())
                                             .addToBackStack(null).commit();
                                 }
                             }
