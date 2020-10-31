@@ -2,10 +2,8 @@ package com.example.knowyourself;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,26 +19,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
-
-import org.w3c.dom.Text;
-
-import static androidx.constraintlayout.motion.widget.MotionScene.TAG;
 
 public class SignInFragment extends Fragment{
 
@@ -49,16 +34,12 @@ public class SignInFragment extends Fragment{
     private EditText eTextEmail;
     private EditText eTextPassword;
     private TextView btnRegisterNow;
-    private SignInButton signInGoogle;
-
 
     private ProgressDialog mProgressDialog;
     private FirebaseAuth mFirebaseAuth;
 
     private InputMethodManager imm;
 
-    private GoogleSignInClient mGoogleSignInClient;
-    private GoogleSignInOptions gso;
 
     @Nullable
     @Override
@@ -69,7 +50,6 @@ public class SignInFragment extends Fragment{
         eTextEmail = (EditText) view.findViewById(R.id.editText_email);
         eTextPassword = (EditText) view.findViewById(R.id.editText_password);
         btnRegisterNow = (TextView) view.findViewById(R.id.register_now);
-        signInGoogle = (SignInButton) view.findViewById(R.id.btn_signIn_google);
         imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 
         // Initialize Firebase Auth
@@ -141,27 +121,8 @@ public class SignInFragment extends Fragment{
             }
         });
 
-        // Configure Google Sign In
-         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
-        signInGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signIn();
-            }
-        });
 
         return view;
-    }
-
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, 189);
     }
 
     @Override
@@ -171,43 +132,4 @@ public class SignInFragment extends Fragment{
         FirebaseUser currentUser = mFirebaseAuth.getCurrentUser();
         //updateUI(currentUser);
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == 189) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                //firebaseAuthWithGoogle(account.getIdToken());
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e);
-                // ...
-            }
-        }
-    }
-
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
-            // Signed in successfully, show authenticated UI.
-            Toast.makeText(getActivity(),"Sign In Successfully",Toast.LENGTH_SHORT).show();
-            //Redirect to profile
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, new ProfileFragment())
-                    .addToBackStack(null).commit();
-        } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-            //updateUI(null);
-        }
-    }
-
 }

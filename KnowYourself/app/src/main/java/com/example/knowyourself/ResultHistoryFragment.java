@@ -84,6 +84,7 @@ public class ResultHistoryFragment extends Fragment {
             });
 
         }else{
+            Toast.makeText(getContext(),"Please sign in to view result history.",Toast.LENGTH_SHORT).show();
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
         }

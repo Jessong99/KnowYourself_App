@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,17 +38,24 @@ public class HomeFragment extends Fragment {
         btnProfile = (Button) view.findViewById(R.id.btn_user_profile);
         btnAboutUs = (Button) view.findViewById(R.id.btn_about_us_home);
 
-        if (mFirebaseAuth.getCurrentUser() != null) {
+
             //implement DISC test
             btnDISCTest.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //initialize shared preferences
-                    mPreferences = getContext().getSharedPreferences(spFileName, getContext().MODE_PRIVATE);
-                    //new saved preference
-                    mPreferences.edit().clear().apply();
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, new DiscFragment()).addToBackStack(null).commit();
+
+                    if (mFirebaseAuth.getCurrentUser() != null) {
+                        //initialize shared preferences
+                        mPreferences = getContext().getSharedPreferences(spFileName, getContext().MODE_PRIVATE);
+                        //new saved preference
+                        mPreferences.edit().clear().apply();
+                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container, new DiscFragment()).addToBackStack(null).commit();
+                    }else{
+                        Toast.makeText(getContext(),"Please sign in to take the DISC test.",Toast.LENGTH_SHORT).show();
+                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
+                    }
                 }
             });
 
@@ -95,11 +103,6 @@ public class HomeFragment extends Fragment {
                 }
             });
 
-        }else{
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
-
-        }
         return view;
     }
 }
