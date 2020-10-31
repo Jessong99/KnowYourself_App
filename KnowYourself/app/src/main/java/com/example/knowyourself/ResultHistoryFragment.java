@@ -1,5 +1,6 @@
 package com.example.knowyourself;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ public class ResultHistoryFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    ProgressDialog mProgressDialog;
 
     //Set Up Firebase
     FirebaseAuth mFirebaseAuth;
@@ -39,6 +41,10 @@ public class ResultHistoryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view =  inflater.inflate(R.layout.fragment_result_history,container,false);
+
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setMessage("Loading Result History...");
+        mProgressDialog.show();
 
         //Set Up recyclerView
         recyclerView = (RecyclerView)view.findViewById(R.id.result_history_recycler_view);// use a linear layout manager
@@ -74,7 +80,7 @@ public class ResultHistoryFragment extends Fragment {
                     }
                     mAdapter = new ResultHistoryAdapter(getContext(),mList);
                     recyclerView.setAdapter(mAdapter);
-
+                    mProgressDialog.dismiss();
                 }
 
                 @Override

@@ -1,5 +1,6 @@
 package com.example.knowyourself;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ public class ProfileFragment extends Fragment {
     String gender = "";
     private ImageView avatar;
     private Button btnLogOut, btnViewHistory;
+    private ProgressDialog mProgressDialog;
 
     FirebaseAuth mFirebaseAuth;
     private DatabaseReference mDatabaseReference;
@@ -36,6 +38,10 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
+
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setMessage("Loading Profile...");
+        mProgressDialog.show();
 
         //check if user currently log in
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -70,20 +76,21 @@ public class ProfileFragment extends Fragment {
                     tvBirthdate.setText(dataSnapshot.child("birthDate").getValue().toString() + " - " +
                             dataSnapshot.child("birthMonth").getValue().toString() + " - " +
                             dataSnapshot.child("birthYear").getValue().toString());
+
+                    if (gender == "Male"){
+                        avatar.setImageResource(R.drawable.ic_avatar_male);
+                    }
+
+                    if (gender.equals("Female")){
+                        avatar.setImageResource(R.drawable.ic_avatar_female);
+                    }
+                    mProgressDialog.dismiss();
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
             });
-
-            if (gender.equals("Male")){
-                avatar.setImageResource(R.drawable.ic_avatar_male);
-            }
-
-            if (gender.equals("Female")){
-                avatar.setImageResource(R.drawable.ic_avatar_female);
-            }
 
             tvEmail.setText("" + user.getEmail());
 

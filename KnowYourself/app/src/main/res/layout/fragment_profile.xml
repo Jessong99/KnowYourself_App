@@ -48,12 +48,14 @@
                     android:id="@+id/textView8"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="Full Name\t\t:" />
+                    android:text="Full Name\t:"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_profile_fullname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="18sp"
                     android:text="TextView" />
             </LinearLayout>
 
@@ -66,11 +68,13 @@
                 <TextView
                     android:id="@+id/textView9"
                     android:layout_width="100dp"
+                    android:textSize="18sp"
                     android:layout_height="wrap_content"
                     android:text="Email\t\t:" />
 
                 <TextView
                     android:id="@+id/tv_profile_email"
+                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="TextView" />
@@ -84,12 +88,14 @@
 
                 <TextView
                     android:id="@+id/textView11"
+                    android:textSize="18sp"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="Gender\t\t:" />
 
                 <TextView
                     android:id="@+id/tv_profile_gender"
+                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="TextView" />
@@ -103,12 +109,14 @@
 
                 <TextView
                     android:id="@+id/textView14"
+                    android:textSize="18sp"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="Birth date\t\t:" />
 
                 <TextView
                     android:id="@+id/tv_profile_date"
+                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="TextView" />

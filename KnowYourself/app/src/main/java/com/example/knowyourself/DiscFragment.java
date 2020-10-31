@@ -1,5 +1,6 @@
 package com.example.knowyourself;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -40,6 +41,7 @@ public class DiscFragment extends Fragment {
     private DatabaseReference mDatabaseReference, mDatabaseReference2;
 
     private Button btnSubmitTest;
+    private ProgressDialog mProgressDialog;
     //Shared Preferences
     private SharedPreferences mPreferences;
     private String spFileName = "com.example.sharedpreference" ;
@@ -49,6 +51,10 @@ public class DiscFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view =  inflater.inflate(R.layout.fragmemt_disc,container,false);
 
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setMessage("Loading Test...");
+        mProgressDialog.show();
+
         //initialize shared preferences
         mPreferences = this.getActivity().getSharedPreferences(spFileName, getContext().MODE_PRIVATE);
 
@@ -56,6 +62,7 @@ public class DiscFragment extends Fragment {
         recyclerView = (RecyclerView)view.findViewById(R.id.disc_recycler_view);// use a linear layout manager
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
+
 
         //retrieve data from firebase
         mDatabaseReference = FirebaseDatabase.getInstance().getReference()
@@ -108,6 +115,7 @@ public class DiscFragment extends Fragment {
                 }
                 mAdapter = new DiscAdapter(getContext(),mList);
                 recyclerView.setAdapter(mAdapter);
+                mProgressDialog.dismiss();
             }
 
             @Override
