@@ -13,7 +13,9 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_cropped_logo" />
+        android:background="@mipmap/ic_cropped_logo"
+        android:src="@mipmap/ic_cropped_logo"
+        tools:srcCompat="@mipmap/ic_cropped_logo" />
 
     <TextView
         android:id="@+id/header_name"
