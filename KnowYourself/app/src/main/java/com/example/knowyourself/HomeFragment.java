@@ -39,69 +39,69 @@ public class HomeFragment extends Fragment {
         btnAboutUs = (Button) view.findViewById(R.id.btn_about_us_home);
 
 
-            //implement DISC test
-            btnDISCTest.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        //implement DISC test
+        btnDISCTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-                    if (mFirebaseAuth.getCurrentUser() != null) {
-                        //initialize shared preferences
-                        mPreferences = getContext().getSharedPreferences(spFileName, getContext().MODE_PRIVATE);
-                        //new saved preference
-                        mPreferences.edit().clear().apply();
-                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.fragment_container, new DiscFragment()).addToBackStack(null).commit();
-                    }else{
-                        Toast.makeText(getContext(),"Please sign in to take the DISC test.",Toast.LENGTH_SHORT).show();
-                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
-                    }
-                }
-            });
-
-            //display result history
-            btnResultHisotry.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                if (mFirebaseAuth.getCurrentUser() != null) {
+                    //initialize shared preferences
+                    mPreferences = getContext().getSharedPreferences(spFileName, getContext().MODE_PRIVATE);
+                    //new saved preference
+                    mPreferences.edit().clear().apply();
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, new ResultHistoryFragment()).addToBackStack(null).commit();
-                }
-            });
-
-            //display personality profile
-            btnPersonalityProfile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                    fragmentTransaction.replace(R.id.fragment_container, new DiscFragment()).addToBackStack(null).commit();
+                }else{
+                    Toast.makeText(getContext(),"Please sign in to take the DISC test.",Toast.LENGTH_SHORT).show();
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, new PersonalityProfileFragment()).addToBackStack(null).commit();
-
+                    fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
                 }
-            });
+            }
+        });
 
-            //redirect to MyFeed section
-            btnMyFeed.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, new MyFeedFragment()).addToBackStack(null).commit();
-                }
-            });
+        //display result history
+        btnResultHisotry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new ResultHistoryFragment()).addToBackStack(null).commit();
+            }
+        });
 
-            btnProfile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, new ProfileFragment()).addToBackStack(null).commit();
-                }
-            });
+        //display personality profile
+        btnPersonalityProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new PersonalityProfileFragment()).addToBackStack(null).commit();
 
-            btnAboutUs.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container, new AboutUsFragment()).addToBackStack(null).commit();
-                }
-            });
+            }
+        });
+
+        //redirect to MyFeed section
+        btnMyFeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new MyFeedFragment()).addToBackStack(null).commit();
+            }
+        });
+
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new ProfileFragment()).addToBackStack(null).commit();
+            }
+        });
+
+        btnAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new AboutUsFragment()).addToBackStack(null).commit();
+            }
+        });
 
         return view;
     }
