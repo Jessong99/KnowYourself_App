@@ -42,8 +42,7 @@
                 <TextView
                     android:id="@+id/tv_feedContent"
                     android:layout_width="match_parent"
-                    android:layout_height="82dp"
-                    android:maxHeight="55dp"
+                    android:layout_height="90dp"
                     android:text="TextView" />
 
                 <TextView
