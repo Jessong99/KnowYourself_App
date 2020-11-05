@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DiscFragment extends Fragment {
 
@@ -42,10 +43,10 @@ public class DiscFragment extends Fragment {
 
     private Button btnSubmitTest;
     private ProgressDialog mProgressDialog;
+    String signIn = "No";
     //Shared Preferences
     private SharedPreferences mPreferences;
     private String spFileName = "com.example.sharedpreference" ;
-    String signIn = "No";
 
     @Nullable
     @Override
@@ -60,6 +61,15 @@ public class DiscFragment extends Fragment {
             mProgressDialog = new ProgressDialog(getActivity());
             mProgressDialog.setMessage("Loading Test...");
             mProgressDialog.show();
+
+            //new saved preference
+            mPreferences.edit().clear().apply();
+            //initialization of editor
+            final SharedPreferences.Editor spEditor = mPreferences.edit();
+            //put key-value pair
+            spEditor.putString("signIn","Yes");
+            //save the preferences
+            spEditor.commit();
 
             //Set Up recyclerView
             recyclerView = (RecyclerView)view.findViewById(R.id.disc_recycler_view);// use a linear layout manager
@@ -161,7 +171,7 @@ public class DiscFragment extends Fragment {
                     int totalSelected = noD + noI + noS + noC;
 
                     //make sure all question is completed
-                    if (totalSelected != totalQue) {
+                    if (totalSelected < totalQue) {
                         Toast.makeText(getContext(), "Please complete all questions.", Toast.LENGTH_SHORT).show();
                     }else {
 
@@ -172,7 +182,7 @@ public class DiscFragment extends Fragment {
                             FirebaseUser user = mFirebaseAuth.getCurrentUser();
                             String uid = user.getUid();
                             //get current timeStamp
-                            Long tsLong = System.currentTimeMillis()/1000;
+                            Long tsLong = new Date().getTime();
                             String ts = tsLong.toString();
 
                             mDatabaseReference2 = FirebaseDatabase.getInstance().getReference()
@@ -203,7 +213,7 @@ public class DiscFragment extends Fragment {
                 }
             }));
         }else {
-            Toast.makeText(getContext(),"Please sign in to view result history.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"Please sign in to take test.",Toast.LENGTH_SHORT).show();
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, new SignInFragment()).addToBackStack(null).commit();
         }

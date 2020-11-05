@@ -117,7 +117,7 @@ public class SignInFragment extends Fragment{
                                     //put key-value pair
                                     spEditor.putString("signIn","Yes");
                                     //save the preferences
-                                    spEditor.apply();
+                                    spEditor.commit();
 
                                     Toast.makeText(getActivity(),"Sign In Successfully",Toast.LENGTH_SHORT).show();
                                     //Redirect to profile

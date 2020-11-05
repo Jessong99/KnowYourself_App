@@ -47,8 +47,6 @@ public class HomeFragment extends Fragment {
                 if (mFirebaseAuth.getCurrentUser() != null) {
                     //initialize shared preferences
                     mPreferences = getContext().getSharedPreferences(spFileName, getContext().MODE_PRIVATE);
-                    //new saved preference
-                    mPreferences.edit().clear().apply();
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.fragment_container, new DiscFragment()).addToBackStack(null).commit();
                 }else{

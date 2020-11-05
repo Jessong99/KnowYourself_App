@@ -12,11 +12,12 @@
         android:elevation="3dp"
         android:padding="20dp"
         app:cardCornerRadius="3dp"
-        app:cardUseCompatPadding="true" >
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#D8E6F6"
             android:orientation="vertical">
 
             <ImageView
@@ -32,17 +33,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:paddingBottom="20dp"
                 android:background="#00FFFFFF"
                 android:backgroundTint="#DCFFFFFF"
+                android:paddingBottom="20dp"
                 android:text="Large Text"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="100dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="100dp">
 
                 <TextView
                     android:id="@+id/textView8"
@@ -55,79 +56,79 @@
                     android:id="@+id/tv_profile_fullname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="100dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="100dp">
 
                 <TextView
                     android:id="@+id/textView9"
                     android:layout_width="100dp"
-                    android:textSize="18sp"
                     android:layout_height="wrap_content"
-                    android:text="Email\t\t:" />
+                    android:text="Email\t\t:"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_profile_email"
-                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="100dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="100dp">
 
                 <TextView
                     android:id="@+id/textView11"
-                    android:textSize="18sp"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="Gender\t\t:" />
+                    android:text="Gender\t\t:"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_profile_gender"
-                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="100dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="100dp">
 
                 <TextView
                     android:id="@+id/textView14"
-                    android:textSize="18sp"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="Birth date\t\t:" />
+                    android:text="Birth date\t\t:"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tv_profile_date"
-                    android:textSize="18sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/btn_viewResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="20dp"
                 android:text="View Test Results" />
 
             <Button
