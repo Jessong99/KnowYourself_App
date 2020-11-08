@@ -38,7 +38,7 @@ import java.util.Calendar;
 
 public class RegisterFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
-    private EditText eTextEmailR, eTextPasswordR, firstName, name;
+    private EditText eTextEmailR, eTextPasswordR, firstName, name, confrimPW;
     private InputMethodManager imm;
     private Button buttonR, btnDate;
     private TextView signInNow;
@@ -62,6 +62,7 @@ public class RegisterFragment extends Fragment implements DatePickerDialog.OnDat
         firstName = (EditText) view.findViewById(R.id.editText_fNameR);
         name = (EditText) view.findViewById(R.id.editText_lNameR);
         signInNow = (TextView) view.findViewById(R.id.signIn_now);
+        confrimPW = (EditText) view.findViewById(R.id.editText_confirmR);
 
         buttonR = (Button) view.findViewById(R.id.btn_register);
         mSpinner = (Spinner) view.findViewById(R.id.spinnerGender);
@@ -119,6 +120,7 @@ public class RegisterFragment extends Fragment implements DatePickerDialog.OnDat
                 final String firstR = firstName.getText().toString().trim();
                 final String nameR = name.getText().toString().trim();
                 String dateR = btnDate.getText().toString().trim();
+                String conPW = confrimPW.getText().toString().trim();
 
                 if(TextUtils.isEmpty(nameR)){
                     //last name is empty
@@ -137,7 +139,6 @@ public class RegisterFragment extends Fragment implements DatePickerDialog.OnDat
                     Snackbar.make(view, "Please enter the email.", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
-
                 if (dateR.equals("Enter your birth date")){
                     //birth date is empty
                     Snackbar.make(view, "Please enter the birth date.", Snackbar.LENGTH_SHORT).show();
@@ -149,6 +150,13 @@ public class RegisterFragment extends Fragment implements DatePickerDialog.OnDat
                     Snackbar.make(view, "Please enter the password.", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
+
+                if(!(passwordR.equals(conPW))){
+                    //password is not match
+                    Snackbar.make(view, "The password is not match.", Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
+
 
                 if (!Patterns.EMAIL_ADDRESS.matcher(emailR).matches())
                 {
