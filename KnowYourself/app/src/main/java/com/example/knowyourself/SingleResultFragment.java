@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SingleResultFragment extends Fragment {
+
+    ImageView mImageView;
 
     //RecyclerView
     private RecyclerView recyclerView;
@@ -54,6 +57,8 @@ public class SingleResultFragment extends Fragment {
 
         //initialize shared preferences
         mPreferences = this.getActivity().getSharedPreferences(spFileName, getContext().MODE_PRIVATE);
+
+        mImageView = (ImageView) view.findViewById(R.id.iv_result);
 
         //Set Up recyclerView
         recyclerView = (RecyclerView)view.findViewById(R.id.single_result_recycler_view);// use a linear layout manager
@@ -97,6 +102,26 @@ public class SingleResultFragment extends Fragment {
                     int maxValueInMap=(Collections.max(map.values()));  // This will return max value in the Hashmap
                     for (Map.Entry<String, Integer> entry : map.entrySet()) {  // Itrate through hashmap
                         if (entry.getValue()==maxValueInMap) {
+
+                            switch(entry.getKey()){
+                                case "D":
+                                    mImageView.setImageResource(R.drawable.dominant);
+                                    break;
+                                case "I":
+                                    mImageView.setImageResource(R.drawable.influence);
+                                    break;
+                                case "S":
+                                    mImageView.setImageResource(R.drawable.steadiness);
+                                    break;
+                                case "C":
+                                    mImageView.setImageResource(R.drawable.complaint);
+                                    break;
+                                default:
+                                    mImageView.setImageResource(R.drawable.disc_profile);
+                                    break;
+
+                            }
+
                             // Print the key with max value
                             mDatabaseContent.child(entry.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
