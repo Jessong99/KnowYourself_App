@@ -88,7 +88,7 @@ public class PersonalityProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 title.setText("The \"C\" Personality Style Explained");
-                tv.setText("Steadiness: gentle, accommodating, and soft-hearted (moderate-paced and accepting)\n\n" +
+                tv.setText("Conscientiousness: private, analytical, and logical (moderate-paced and skeptical)\n\n" +
                         "Goals:  Accuracy, objective processes\n\n" +
                         "Fears: Being wrong, strong displays of emotion\n\n" +
                         "Leadership qualities: Communicating with clarity, promoting disciplined analysis" +
