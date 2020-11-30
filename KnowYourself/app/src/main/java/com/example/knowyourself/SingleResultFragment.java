@@ -159,7 +159,6 @@ public class SingleResultFragment extends Fragment {
                 }
             });
 
-            Toast.makeText(getContext(),"Result Saved", Toast.LENGTH_SHORT).show();
 
         }else{
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();

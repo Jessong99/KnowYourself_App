@@ -172,7 +172,6 @@ public class DiscFragment extends Fragment {
 
 
                     String q = Integer.toString(totalSelected);
-                    Toast.makeText(getContext(),q,Toast.LENGTH_SHORT).show();
                     //make sure all question is completed
                     if (totalSelected != totalQue) {
                         Toast.makeText(getContext(), "Please complete all questions.", Toast.LENGTH_SHORT).show();
