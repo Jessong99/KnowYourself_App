@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DDF3F6"
     android:orientation="vertical">
 
     <TextView
@@ -12,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:text="About Us"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
@@ -48,7 +48,6 @@
         android:layout_height="290dp"
         android:layout_gravity="center"
         android:text="\n - DiSC personality test assessment with automatic results generation
-        \n\n - Trainer dashboard with assessment content management tools
         \n\n - DiSC personality profile with general description on different personality types
         \n\n - My Feed section with search engine to extend participant’s personal improvement"
         android:textAlignment="center"
